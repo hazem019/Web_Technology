@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web Technologies — Question Bank & Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=Cairo:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9edf5;
+  --card:#fff;
+  --ink:#101a33;
+  --dim:#5b6682;
+  --line:#d3d9e8;
+  --ac:#2f4bff;
+  --ok:#0f8f50;
+  --okbg:#e3f6ec;
+  --no:#d93a45;
+  --nobg:#fdeaec;
+  --warn:#d97706;
+  --warnbg:#fef3c7;
+  color-scheme:light;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0b101f;
+    --card:#131a2f;
+    --ink:#e8ecf8;
+    --dim:#8f9bb8;
+    --line:#27304c;
+    --ac:#8196ff;
+    --ok:#3ddc8a;
+    --okbg:#0f2f1f;
+    --no:#ff6b75;
+    --nobg:#3a1620;
+    --warn:#fbbf24;
+    --warnbg:#2e210b;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 'Instrument Sans','Cairo',system-ui,sans-serif;padding:0 16px 50px}
+header{max-width:1080px;margin:0 auto;padding:32px 0 20px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+h1{font:800 clamp(30px,5vw,56px)/1.05 'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.03em}
+header p{color:var(--dim);margin-top:8px}
+
+/* Main View Switcher Tabs */
+.main-tabs{display:inline-flex;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:5px;gap:6px;box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+.main-tabs button{font:700 15px 'Cairo','Instrument Sans',sans-serif;padding:10px 18px;border:0;border-radius:10px;background:transparent;color:var(--dim);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+.main-tabs button:hover{color:var(--ink)}
+.main-tabs button.active{background:var(--ac);color:#fff;box-shadow:0 2px 8px color-mix(in srgb,var(--ac) 35%,transparent)}
+
+.wrap{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:270px 1fr;gap:20px;align-items:start}
+.wrap.ref-mode{grid-template-columns:1fr}
+aside{position:sticky;top:16px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.big{font:800 34px/1 'Bricolage Grotesque',sans-serif}.big small{font-size:16px;color:var(--dim);font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:9px;margin:10px 0 14px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+#map{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+#map button{aspect-ratio:1;border:1px solid var(--line);background:transparent;color:var(--dim);border-radius:7px;font:600 12px 'Instrument Sans';cursor:pointer}
+#map .ans{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#map .ok{background:var(--ok);border-color:var(--ok);color:#fff}#map .no{background:var(--no);border-color:var(--no);color:#fff}
+#map .cur{outline:2px solid var(--ac);outline-offset:2px}#map .dim{opacity:.3}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.seg button,.btn,select{font:600 14px 'Instrument Sans','Cairo',sans-serif;padding:9px 14px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+.seg .on{background:var(--ink);color:var(--bg)}
+select{border:1px solid var(--line);border-radius:10px;background:var(--card);max-width:100%}
+.btn{border:1px solid var(--line);border-radius:10px;background:var(--card);transition:all .15s}
+.btn:hover:not(:disabled){border-color:var(--ac)}
+.btn.pri{background:var(--ac);border-color:var(--ac);color:#fff}
+.btn:disabled{opacity:.4;cursor:default}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,32px)}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--dim);font-size:14px;margin-bottom:14px}
+.req{font:500 13px ui-monospace,Menlo,Consolas,monospace;background:var(--bg);padding:3px 10px;border-radius:7px;color:var(--ink)}
+#q{font:500 clamp(20px,2.6vw,26px)/1.35 'Bricolage Grotesque',sans-serif;margin-bottom:22px}
+#opts{display:grid;gap:10px}
+.opt{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;padding:14px 16px;border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:12px;font:inherit;cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--ac)}.opt:disabled{cursor:default}
+.opt kbd{flex:none;width:30px;height:30px;display:grid;place-items:center;font:700 14px 'Instrument Sans';border:1px solid var(--line);border-bottom-width:3px;border-radius:7px;background:var(--bg)}
+.opt.on{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 10%,transparent)}.opt.on kbd{background:var(--ac);color:#fff;border-color:var(--ac)}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.ok kbd{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.no{border-color:var(--no);background:var(--nobg)}.opt.no kbd{background:var(--no);color:#fff;border-color:var(--no)}
+.fb{margin-top:16px;padding:12px 16px;border-radius:10px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--nobg)}.fb.hide,.hide{display:none!important}
+.fb code{font:600 13px ui-monospace,Menlo,monospace;padding:3px 9px;border-radius:6px;color:#fff}.fb.ok code{background:var(--ok)}.fb.no code{background:var(--no)}
+
+/* Explanation Box Styling */
+.ex{margin-top:14px;padding:18px 22px;border-inline-start:4px solid var(--ac);background:var(--bg);border-radius:12px;line-height:1.95;text-align:start;font-family:'Cairo','Instrument Sans',sans-serif}
+.ex h3{font:800 16px 'Cairo','Instrument Sans',sans-serif;margin:16px 0 8px;color:var(--ac);display:flex;align-items:center;gap:6px}
+.ex h3:first-child{margin-top:0}
+.ex ul{list-style:none;padding:0;display:grid;gap:8px}
+.ex li{display:flex;gap:12px;align-items:baseline;padding:8px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line)}
+.ex li.mine{background:var(--nobg);border-color:var(--no)}
+.ex li b{flex:none;width:26px;height:26px;display:grid;place-items:center;border:1px solid var(--line);border-radius:7px;font:700 13px 'Instrument Sans';background:var(--bg)}
+bdi.en{font-family:'Instrument Sans',ui-monospace,sans-serif;font-weight:700;unicode-bidi:isolate;background:color-mix(in srgb,var(--ac) 12%,transparent);color:var(--ac);padding:1px 7px;border-radius:6px;font-size:0.93em}
+.ex .tip{margin-top:14px;padding:12px 16px;border-radius:10px;background:var(--warnbg);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);color:var(--ink)}
+
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+#res{margin-top:16px}#res h2{font:800 28px 'Bricolage Grotesque',sans-serif;margin-bottom:6px}
+#res .chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}#res .chips button{padding:5px 11px}
+
+/* Custom Modal Confirmation instead of native confirm() */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:grid;place-items:center;z-index:100;padding:16px;backdrop-filter:blur(3px)}
+.modal-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;max-width:400px;width:100%;box-shadow:0 20px 40px rgba(0,0,0,0.25)}
+.modal-box h3{font:700 18px 'Bricolage Grotesque','Cairo',sans-serif;margin-bottom:8px}
+.modal-box p{color:var(--dim);margin-bottom:18px;font-size:15px}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px}
+
+/* Reference & Cheat Sheet Styles */
+#refView{font-family:'Cairo','Instrument Sans',sans-serif;line-height:1.85}
+.ref-header{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.ref-search{flex:1;min-width:260px;position:relative}
+.ref-search input{width:100%;padding:12px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:600 15px 'Cairo','Instrument Sans',sans-serif}
+.ref-search input:focus{outline:none;border-color:var(--ac)}
+.ref-QuickNav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;width:100%}
+.ref-QuickNav a{text-decoration:none;font-size:13px;font-weight:700;padding:6px 12px;border-radius:8px;background:var(--bg);color:var(--ink);border:1px solid var(--line);transition:all .15s}
+.ref-QuickNav a:hover{border-color:var(--ac);color:var(--ac)}
+
+.ref-sec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,28px);margin-bottom:22px}
+.ref-sec h2{font:800 clamp(20px,2.5vw,25px) 'Cairo',sans-serif;color:var(--ac);margin-bottom:8px;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--line);padding-bottom:12px}
+.ref-sec > p{color:var(--dim);margin-bottom:16px;font-size:15px}
+
+.table-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:12px}
+.ref-table{width:100%;border-collapse:collapse;text-align:right;font-size:15px}
+.ref-table th,.ref-table td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.ref-table th{background:var(--bg);font-weight:800;color:var(--ink);white-space:nowrap}
+.ref-table tr:last-child td{border-bottom:0}
+.ref-table tr:hover td{background:color-mix(in srgb,var(--ac) 4%,transparent)}
+
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin-top:14px}
+.ref-box{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px}
+.ref-box h3{font:800 17px 'Cairo',sans-serif;margin-bottom:8px;color:var(--ink);display:flex;align-items:center;justify-content:space-between}
+.ref-box ul{padding-right:18px;display:grid;gap:6px;font-size:14.5px}
+.kw-badge{display:inline-block;background:var(--okbg);color:var(--ok);font:700 12px 'Instrument Sans',monospace;padding:3px 8px;border-radius:6px;margin-top:8px;border:1px solid color-mix(in srgb,var(--ok) 30%,transparent)}
+
+@media(max-width:820px){
+  .wrap{grid-template-columns:1fr}
+  aside{position:static;order:2}
+  #map{grid-template-columns:repeat(10,1fr)}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Web Technologies</h1>
+    <p>بنك الأسئلة الكامل (50 سؤال) + دليل المقارنات والمراجعة السريعة للامتحان</p>
+  </div>
+  <div class="main-tabs" role="tablist">
+    <button id="tabQuiz" class="active" role="tab" aria-selected="true">📝 بنك الأسئلة (50 سؤال)</button>
+    <button id="tabRef" role="tab" aria-selected="false">📚 ملخص المقارنات والمراجعة</button>
+  </div>
+</header>
+
+<div class="wrap" id="mainWrap">
+  <!-- QUIZ VIEW -->
+  <main id="quizView">
+    <div class="ctl">
+      <div class="seg" role="group" aria-label="Mode">
+        <button id="m0" class="on">Study (شرح فوري)</button>
+        <button id="m1">Exam (امتحان)</button>
+      </div>
+      <select id="tp" aria-label="Topic"><option value="all">كل المواضيع (All 50 Questions)</option></select>
+      <button class="btn" id="rs">إعادة البدء (Restart)</button>
+    </div>
+
+    <section class="card">
+      <div class="top">
+        <span class="req" id="req"></span>
+        <span id="topic"></span>
+      </div>
+      <h2 id="q"></h2>
+      <div id="opts"></div>
+      <div id="fb" class="fb hide"></div>
+      <div id="ex" class="ex hide" dir="rtl"></div>
+      <div class="nav">
+        <button class="btn" id="pv">Previous</button>
+        <button class="btn hide" id="fn">Finish exam</button>
+        <button class="btn pri" id="nx">Next</button>
+      </div>
+    </section>
+
+    <section class="card hide" id="res"></section>
+  </main>
+
+  <aside id="quizAside">
+    <div class="big" id="sc"></div>
+    <div class="bar"><i id="pb"></i></div>
+    <div id="map"></div>
+  </aside>
+
+  <!-- REFERENCE / CHEAT SHEET VIEW -->
+  <div id="refView" class="hide" dir="rtl">
+    <div class="ref-header">
+      <div>
+        <h2 style="font:800 24px 'Cairo',sans-serif;margin-bottom:4px">🔥 الزتونة: مراجعة أهم المقارنات ومفاتيح الحل</h2>
+        <p style="color:var(--dim);font-size:14.5px">مجمعة ومترتبة بنفس طريقة شرحنا عشان تراجع الفروقات المتشابهة في دقايق قبل الامتحان.</p>
+      </div>
+      <div class="ref-search">
+        <input type="search" id="refSearchInput" placeholder="🔍 ابحث عن أي مصطلح (مثلاً: SSR, gRPC, Fog, PoS, RAG)...">
+      </div>
+      <div class="ref-QuickNav">
+        <a href="#sec-render">1. طرق الريندر (CSR / SSR / SSG)</a>
+        <a href="#sec-arch">2. معماريات الأنظمة والواجهات</a>
+        <a href="#sec-api">3. مقارنة الـ APIs والاتصال اللحظي</a>
+        <a href="#sec-rest">4. تفاصيل REST & GraphQL</a>
+        <a href="#sec-ai">5. الذكاء الاصطناعي والويب الحديث</a>
+        <a href="#sec-cloud">6. مقارنة Edge vs Fog vs Cloud</a>
+        <a href="#sec-serverless">7. الـ Serverless والـ Blockchain</a>
+      </div>
+    </div>
+
+    <!-- SECTION 1: RENDERING -->
+    <section class="ref-sec" id="sec-render">
+      <h2>1️⃣ مقارنة استراتيجيات عرض وبناء الصفحات (Rendering Strategies)</h2>
+      <p>أهم مقارنة في الشيت كله (الأسئلة 3، 12، 13، 14، 15، 16، 17). الفرق كله بيدور حوالين: <b>مين بيطبخ الصفحة؟ وإمتى؟</b></p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>الطريقة</th>
+              <th>فين بتتجهز؟</th>
+              <th>إمتى بتتجهز؟ (التوقيت)</th>
+              <th>الـ SEO والسرعة المبدئية</th>
+              <th>أفضل استخدام (أمثلة الشيت)</th>
+              <th>مفتاح الحل في الامتحان 🔑</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><bdi class="en">CSR</bdi><br><small>Client-Side Rendering</small></td>
+              <td>جوه المتصفح (<bdi class="en">Browser</bdi>)</td>
+              <td>وقت الاستخدام بالـ <bdi class="en">JavaScript</bdi></td>
+              <td>ضعيف في الـ <bdi class="en">SEO</bdi>، وتفاعل لحظي سريع بدون تحميل الصفحة</td>
+              <td>لوحة تحكم تفاعلية (<bdi class="en">Interactive Dashboard</bdi>) أو <bdi class="en">SPA</bdi></td>
+              <td><bdi class="en">Highly interactive</bdi> + <bdi class="en">Frequent API updates</bdi> + <bdi class="en">Without full page reloads</bdi></td>
+            </tr>
+            <tr>
+              <td><bdi class="en">SSR</bdi><br><small>Server-Side Rendering</small></td>
+              <td>على السيرفر (<bdi class="en">Server</bdi>)</td>
+              <td>وقت طلب المستخدم بالظبط (<bdi class="en">At request time</bdi>)</td>
+              <td>ممتاز جداً في الـ <bdi class="en">SEO</bdi> ودائماً يعرض أحدث داتا</td>
+              <td>صفحة منتج عامة (<bdi class="en">Public product page</bdi>) أسعارها بتتغير ومحتاجة <bdi class="en">SEO</bdi></td>
+              <td><bdi class="en">Generates on server</bdi> + <bdi class="en">At request time</bdi> + <bdi class="en">Frequently updated & SEO</bdi></td>
+            </tr>
+            <tr>
+              <td><bdi class="en">SSG</bdi><br><small>Static Site Generation</small></td>
+              <td>أثناء بناء المشروع (<bdi class="en">Build time</bdi>)</td>
+              <td>قبل ما أي مستخدم يطلب الصفحة (<bdi class="en">Before user requests</bdi>)</td>
+              <td>أسرع تسليم ممكن + أقل حمل على السيرفر + ممتاز للـ <bdi class="en">SEO</bdi></td>
+              <td>مواقع التوثيق (<bdi class="en">Documentation website</bdi>) والمدونات اللي نادر ما تتغير</td>
+              <td><bdi class="en">Changes infrequently</bdi> + <bdi class="en">Before user requests</bdi> + <bdi class="en">Minimal server processing</bdi></td>
+            </tr>
+            <tr>
+              <td><bdi class="en">Hybrid Rendering</bdi></td>
+              <td>مزيج حسب كل صفحة</td>
+              <td>يجمع بين <bdi class="en">SSG</bdi> و <bdi class="en">SSR</bdi> و <bdi class="en">CSR</bdi></td>
+              <td>ياخد مميزات كل طريقة في مكانها الصح</td>
+              <td>متجر إلكتروني: الرئيسية <bdi class="en">SSG</bdi>، المنتجات <bdi class="en">SSR</bdi>، والداشبورد <bdi class="en">CSR</bdi></td>
+              <td>تطبيق واحد يستخدم أكثر من استراتيجية ريندر معاً</td>
+            </tr>
+            <tr>
+              <td><bdi class="en">Islands Architecture</bdi></td>
+              <td>صفحة <bdi class="en">HTML</bdi> ثابتة + جزر تفاعلية</td>
+              <td>ثابتة مع تفعيل <bdi class="en">JS</bdi> للجزر الصغيرة فقط</td>
+              <td>خفيف جداً لأنه يقلل الـ <bdi class="en">JavaScript</bdi> غير الضروري</td>
+              <td>صفحة معظمها ثابت (<bdi class="en">Mostly static page</bdi>) وفيها كام جزء تفاعلي بسيط</td>
+              <td><bdi class="en">Mostly static</bdi> + <bdi class="en">Few interactive components</bdi> + <bdi class="en">Minimize unnecessary JS</bdi></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ARCHITECTURES -->
+    <section class="ref-sec" id="sec-arch">
+      <h2>2️⃣ معماريات الأنظمة وتقسيم الواجهات (Application & Frontend Architectures)</h2>
+      <p>الفرق بين تقسيم الطبقات أفقياً وتقسيم الفرق البرمجية رأسياً (الأسئلة 11، 18، 19، 20، 42).</p>
+      <div class="ref-grid">
+        <div class="ref-box">
+          <h3>🏢 Multi-Tier Architecture</h3>
+          <ul>
+            <li>فصل التطبيق إلى 3 طبقات أفقية مميزة (<bdi class="en">Distinct tiers</bdi>):</li>
+            <li>1. واجهة المستخدم (<bdi class="en">User Interface / Presentation</bdi>).</li>
+            <li>2. منطق البيزنس (<bdi class="en">Business Logic</bdi>).</li>
+            <li>3. إدارة قاعدة البيانات (<bdi class="en">Database Management</bdi>).</li>
+          </ul>
+          <span class="kw-badge">UI + Business Logic + Database into distinct tiers</span>
+        </div>
+        <div class="ref-box">
+          <h3>🧩 Micro Frontends</h3>
+          <ul>
+            <li>نفس فكرة الـ <bdi class="en">Microservices</bdi> ولكن في الواجهة الأمامية (<bdi class="en">Frontend</bdi>).</li>
+            <li>لما يكون التطبيق ضخم جداً وشغال عليه <b>عدة فرق (<bdi class="en">Several teams</bdi>)</b>.</li>
+            <li>كل فريق يبني ويحدث الجزء بتاعه (<bdi class="en">Frontend module</bdi>) باستقلالية تامة.</li>
+          </ul>
+          <span class="kw-badge">Several teams + Independence + Frontend modules</span>
+        </div>
+        <div class="ref-box">
+          <h3>🗺️ Architecture vs Framework</h3>
+          <ul>
+            <li><b>المعمارية (<bdi class="en">Architecture</bdi>):</b> هي القرارات التصميمية الكبرى والشاملة للنظام.</li>
+            <li><b>إطار العمل (<bdi class="en">Framework</bdi>):</b> هو الأدوات البرمجية اللي بننفذ بيها (<bdi class="en">Implementation capabilities</bdi>).</li>
+            <li><b>معيار اختيار المعمارية:</b> دائماً حسب متطلبات التطبيق والمفاضلات الهندسية (<bdi class="en">Requirements & Trade-offs</bdi>).</li>
+          </ul>
+          <span class="kw-badge">Requirements and architectural trade-offs</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: APIs & REALTIME -->
+    <section class="ref-sec" id="sec-api">
+      <h2>3️⃣ مقارنة شاملة لبروتوكولات الـ APIs والاتصال اللحظي</h2>
+      <p>إمتى نختار <bdi class="en">REST</bdi> أو <bdi class="en">GraphQL</bdi> أو <bdi class="en">gRPC</bdi> أو <bdi class="en">WebSockets</bdi>؟ (الأسئلة 2، 21، 25، 27، 28، 29، 30).</p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>التقنية</th>
+              <th>الفكرة الأساسية</th>
+              <th>شكل البيانات والاتصال</th>
+              <th>متى نستخدمها؟</th>
+              <th>علامتها في السؤال 🎯</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><bdi class="en">REST</bdi></td>
+              <td>متمحور حول الموارد وروابطها (<bdi class="en">Resource URLs</bdi>)</td>
+              <td>أوامر <bdi class="en">HTTP</bdi> قياسية (<bdi class="en">GET, POST...</bdi>) غالباً بصيغة <bdi class="en">JSON</bdi> ثابتة</td>
+              <td>الـ <bdi class="en">APIs</bdi> القياسية لجلب أو تعديل الموارد عبر روابط واضحة</td>
+              <td><bdi class="en">Standardized HTTP methods and resource URLs</bdi></td>
+            </tr>
+            <tr>
+              <td><bdi class="en">GraphQL</bdi></td>
+              <td>الكلاينت يطلب الحقول اللي محتاجها بالمللي (<bdi class="en">Client-selected fields</bdi>)</td>
+              <td>استعلامات (<bdi class="en">Queries</bdi>) تمنع جلب بيانات زيادة ملهاش لازمة</td>
+              <td>تطبيقات الموبايل اللي بتحتاج تركيبات بيانات مختلفة في شاشات متعددة</td>
+              <td><bdi class="en">Minimizing unnecessary data retrieval</bdi> + <bdi class="en">Client-selected fields</bdi></td>
+            </tr>
+            <tr>
+              <td><bdi class="en">gRPC</bdi></td>
+              <td>استدعاء دوال عن بُعد (<bdi class="en">Remote service methods</bdi>) بعقود صارمة</td>
+              <td>ثنائي سريع (<bdi class="en">Protocol Buffers</bdi>) + يدعم التدفق (<bdi class="en">Streaming</bdi>)</td>
+              <td>التواصل الداخلي السريع بين الـ <bdi class="en">Internal Microservices</bdi></td>
+              <td><bdi class="en">Strongly typed contracts</bdi> + <bdi class="en">Efficient serialization</bdi> + <bdi class="en">Explicit contracts</bdi></td>
+            </tr>
+            <tr>
+              <td><bdi class="en">WebSockets</bdi></td>
+              <td>قناة اتصال مفتوحة ومستمرة في الاتجاهين (<bdi class="en">Full-Duplex</bdi>)</td>
+              <td>السيرفر والمتصفح يبعتوا لبعض في أي لحظة بدون انتظار طلب</td>
+              <td>الشات اللحظي، الألعاب الأونلاين، التحديثات الفورية المزدوجة</td>
+              <td><bdi class="en">Continuous two-way communication</bdi></td>
+            </tr>
+            <tr>
+              <td><bdi class="en">SSE</bdi><br><small>Server-Sent Events</small></td>
+              <td>قناة في اتجاه واحد فقط من السيرفر للمتصفح</td>
+              <td>السيرفر يبعت إشعارات أو تحديثات للمتصفح والعميل يستقبل فقط</td>
+              <td>شريط أخبار أو أسعار أسهم بتتحدث من طرف السيرفر فقط</td>
+              <td>اتجاه واحد (<bdi class="en">One-way server to browser</bdi>)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 4: REST & GRAPHQL DETAILS -->
+    <section class="ref-sec" id="sec-rest">
+      <h2>4️⃣ تفاصيل الـ REST، أكواد HTTP، ومكونات GraphQL</h2>
+      <p>أسئلة مضمونة في الامتحان (الأسئلة 22، 23، 24، 26، 29، 30).</p>
+      <div class="ref-grid">
+        <div class="ref-box">
+          <h3>🛠️ أوامر HTTP (PUT vs PATCH)</h3>
+          <ul>
+            <li><bdi class="en">GET</bdi>: قراءة وجلب بيانات فقط.</li>
+            <li><bdi class="en">POST</bdi>: إنشاء مورد جديد (<bdi class="en">Create new resource</bdi>).</li>
+            <li><bdi class="en">PUT</bdi>: استبدال المنتج بالكامل (<bdi class="en">Complete replacement</bdi>).</li>
+            <li><bdi class="en">PATCH</bdi>: <b>تعديل جزئي</b> (مثلاً تعديل السعر فقط بدون استبدال باقي بيانات المنتج).</li>
+          </ul>
+          <span class="kw-badge">Update ONLY price = PATCH</span>
+        </div>
+        <div class="ref-box">
+          <h3>🚦 أكواد الاستجابة (HTTP Status Codes)</h3>
+          <ul>
+            <li><bdi class="en">200 OK</bdi>: الطلب نجح بشكل عام.</li>
+            <li><bdi class="en">201 Created</bdi>: <b>تم إنشاء مورد جديد بنجاح</b> (الأدق مع إنشاء الـ <bdi class="en">Resources</bdi>).</li>
+            <li><bdi class="en">202 Accepted</bdi>: استلمنا الطلب وجاري معالجته في الخلفية لسه مخلصش.</li>
+            <li><bdi class="en">204 No Content</bdi>: نجح الطلب ومفيش محتوى راجع في الرد (مثل الحذف).</li>
+          </ul>
+          <span class="kw-badge">Creates a new resource = 201 Created</span>
+        </div>
+        <div class="ref-box">
+          <h3>🧠 مبادئ REST & GraphQL</h3>
+          <ul>
+            <li><b><bdi class="en">Stateless Communication</bdi>:</b> كل طلب لازم يحتوي على كل المعلومات اللازمة لمعالجته (السيرفر مش بيفتكر الطلبات القديمة).</li>
+            <li><b><bdi class="en">GraphQL Resolver</bdi>:</b> هو الدالة المسؤولة فعلياً عن جلب أو حساب قيمة الحقل المطلوب.</li>
+            <li><b><bdi class="en">GraphQL Schema</bdi>:</b> يوصف شكل وأنواع البيانات المتاحة فقط.</li>
+          </ul>
+          <span class="kw-badge">Retrieving value of a field = Resolver</span>
+        </div>
+        <div class="ref-box">
+          <h3>📬 نماذج التواصل والأحداث</h3>
+          <ul>
+            <li><b><bdi class="en">Asynchronous Communication</bdi>:</b> يبعت مهمة في الخلفية (<bdi class="en">Background task</bdi>) ويكمل شغله والنتيجة توصل بعدين.</li>
+            <li><b><bdi class="en">Event-Driven Architecture</bdi>:</b> خدمة الطلبات تنشر حدث (<bdi class="en">Publishes an event</bdi>) فيشغل تحديث المخزن والإشعارات والتحليلات بشكل مستقل (<bdi class="en">Independently triggers</bdi>).</li>
+          </ul>
+          <span class="kw-badge">Publishes event + Independently triggers = Event-Driven</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: MODERN WEB & AI -->
+    <section class="ref-sec" id="sec-ai">
+      <h2>5️⃣ تطور الويب، الأداء العالي، والذكاء الاصطناعي (Modern Web & AI)</h2>
+      <p>ملخص أول 10 أسئلة في الشيت بالإضافة لسؤال التعلم الفيدرالي (38).</p>
+      <div class="ref-grid">
+        <div class="ref-box">
+          <h3>🚀 تطور الويب (Web Evolution)</h3>
+          <ul>
+            <li>الويب زمان كان مجرد عرض وتوصيل معلومات (<bdi class="en">Information delivery</bdi>).</li>
+            <li>الويب الحديث اتطور نحو <b>الحوسبة، الذكاء، واتخاذ الفعل (<bdi class="en">Computation, intelligence, and action</bdi>)</b>.</li>
+            <li><b><bdi class="en">Agentic Web</bdi>:</b> يتميز بأن الـ <bdi class="en">AI</bdi> مش بس بيجاوب أسئلة، بل <b>يفكر ويستخدم أدوات وينفذ أفعال (<bdi class="en">Reason, use tools, and perform actions</bdi>)</b>.</li>
+          </ul>
+          <span class="kw-badge">Agentic Web = Reason + Tools + Actions</span>
+        </div>
+        <div class="ref-box">
+          <h3>⚡ WebAssembly vs WebGPU</h3>
+          <ul>
+            <li><b><bdi class="en">WebAssembly (Wasm)</bdi>:</b> تشغيل كود ثقيل الحسابات (<bdi class="en">Computationally intensive code</bdi>) بسرعة قريبة من لغة الآلة جوه المتصفح.</li>
+            <li><b><bdi class="en">WebGPU</bdi>:</b> يتيح للمتصفح الوصول لكارت الشاشة (<bdi class="en">GPU capabilities</bdi>) للرسومات المعقدة والحسابات المتوازية (<bdi class="en">Graphics & parallel computation</bdi>).</li>
+          </ul>
+          <span class="kw-badge">Intensive code = Wasm | GPU & Parallel = WebGPU</span>
+        </div>
+        <div class="ref-box">
+          <h3>📚 خطوات الـ RAG بالترتيب</h3>
+          <ul>
+            <li>عشان الـ <bdi class="en">LLM</bdi> يجاوب بمصداقية من غير تأليف، بيمشي بالترتيب ده:</li>
+            <li>1. <bdi class="en">Question</bdi> (السؤال).</li>
+            <li>2. <bdi class="en">Retrieval</bdi> (البحث واسترجاع المعلومة من الداتابيز).</li>
+            <li>3. <bdi class="en">Context</bdi> (تجهيز السياق).</li>
+            <li>4. <bdi class="en">LLM</bdi> (إرسال السؤال والسياق للنموذج).</li>
+            <li>5. <bdi class="en">Grounded Response</bdi> (إجابة موثقة).</li>
+          </ul>
+          <span class="kw-badge">Question → Retrieval → Context → LLM → Grounded Response</span>
+        </div>
+        <div class="ref-box">
+          <h3>🔒 AI في المتصفح & Federated Learning</h3>
+          <ul>
+            <li><b>تشغيل الـ <bdi class="en">AI</bdi> قريب من المتصفح:</b> يحسن بقاء البيانات محلياً (<bdi class="en">Data locality</bdi>) ويقلل وقت تأخير الشبكة (<bdi class="en">Reduced network latency</bdi>).</li>
+            <li><b><bdi class="en">Federated Learning</bdi>:</b> تدريب نموذج الـ <bdi class="en">AI</bdi> بالتعاون عبر عدة أجهزة (<bdi class="en">Collaboratively across devices</bdi>) <b>بدون نقل البيانات الخام (<bdi class="en">Raw data</bdi>) لسيرفر مركزي</b> للحفاظ على الخصوصية.</li>
+          </ul>
+          <span class="kw-badge">Train collaboratively without transferring raw data = Federated Learning</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: EDGE VS FOG VS CLOUD -->
+    <section class="ref-sec" id="sec-cloud">
+      <h2>6️⃣ مقارنة طبقات الحوسبة: Edge vs Fog vs Cloud + Observability</h2>
+      <p>تغطي الأسئلة من 31 إلى 40 بالكامل. التلات طبقات مش بيلغوا بعض، بل <b>بيكملوا بعض (<bdi class="en">Complement one another</bdi>)</b> حسب متطلبات المهمة.</p>
+      <div class="table-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>الطبقة</th>
+              <th>المكان والدور المعماري</th>
+              <th>المميزات الأساسية</th>
+              <th>أمثلة الشيت العملية</th>
+              <th>كلماتها المفتاحية في الامتحان 🔑</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><bdi class="en">Edge Computing</bdi><br><small>الحوسبة الطرفية</small></td>
+              <td>على الجهاز نفسه أو جنبه مباشرة (الكاميرا، الماكينة، العربية، حساس المريض)</td>
+              <td>استجابة لحظية (<bdi class="en">Very low latency</bdi>) + توفير الـ <bdi class="en">Bandwidth</bdi> + يشتغل حتى لو النت قطع</td>
+              <td>كاميرا تحلل الفيديو محلياً / مصنع يوقف ماكينة فوراً بدون نت / رصد العربيات</td>
+              <td><bdi class="en">Close to devices</bdi> + <bdi class="en">Immediate local response</bdi> + <bdi class="en">Reduced bandwidth</bdi></td>
+            </tr>
+            <tr>
+              <td><bdi class="en">Fog Computing</bdi><br><small>الحوسبة الضبابية</small></td>
+              <td>طبقة وسيطة موزعة (<bdi class="en">Intermediate layer</bdi>) بين الـ <bdi class="en">Edge</bdi> والـ <bdi class="en">Cloud</bdi></td>
+              <td>تجميع البيانات وتنسيقها على مستوى إقليمي أو بين أقسام قريبة</td>
+              <td>سيرفرات إقليمية تجمع بيانات تقاطعات المرور وتنسق الإشارات / تجميع بيانات أقسام المستشفى</td>
+              <td><bdi class="en">Intermediate processing & coordination</bdi> + <bdi class="en">Regional servers aggregate data</bdi></td>
+            </tr>
+            <tr>
+              <td><bdi class="en">Cloud Computing</bdi><br><small>السحابة المركزية</small></td>
+              <td>مراكز بيانات مركزية ضخمة وبعيدة</td>
+              <td>قدرة تخزين وحوسبة هائلة للتحليلات التاريخية وتدريب الذكاء الاصطناعي</td>
+              <td>تخزين السجلات التاريخية للمرضى مركزياً / تحليلات المرور التاريخية وتدريب نماذج <bdi class="en">AI</bdi></td>
+              <td><bdi class="en">Historical records/analytics</bdi> + <bdi class="en">Large-scale AI training</bdi></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ref-grid">
+        <div class="ref-box">
+          <h3>🔍 مبدأ المراقبة (Observability - س31)</h3>
+          <ul>
+            <li>عشان نفهم سلوك أي نظام موزع ونحقق في الأعطال، بنعتمد على 3 ركائز معاً:</li>
+            <li>1. <bdi class="en">Logs</bdi> (سجلات الأحداث النصية).</li>
+            <li>2. <bdi class="en">Metrics</bdi> (أرقام ومؤشرات الأداء مثل الرام والـ CPU).</li>
+            <li>3. <bdi class="en">Traces</bdi> (تتبع مسار الطلب بين الخدمات).</li>
+          </ul>
+          <span class="kw-badge">Logs + Metrics + Traces = Observability</span>
+        </div>
+        <div class="ref-box">
+          <h3>⚖️ معايير توزيع المهام (Workload Placement - س39، س40)</h3>
+          <ul>
+            <li>بنقرر المهمة تشتغل على <bdi class="en">Edge</bdi> ولا <bdi class="en">Fog</bdi> ولا <bdi class="en">Cloud</bdi> بناءً على:</li>
+            <li>الـ <bdi class="en">Latency</bdi>، والـ <bdi class="en">Bandwidth</bdi>، وقدرة المعالجة (<bdi class="en">Computing capacity</bdi>)، والخصوصية (<bdi class="en">Privacy</bdi>)، وحالة الاتصال (<bdi class="en">Connectivity</bdi>).</li>
+            <li>المبدأ الأساسي هو: توزيع أحمال العمل حسب متطلبات المعالجة والتنسيق.</li>
+          </ul>
+          <span class="kw-badge">Distributing workloads according to requirements</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: SERVERLESS & BLOCKCHAIN -->
+    <section class="ref-sec" id="sec-serverless">
+      <h2>7️⃣ الحوسبة بدون خادم (Serverless) والبلوكتشين (Blockchain & Web3)</h2>
+      <p>تغطي آخر 10 أسئلة في الشيت (من 41 إلى 50) + السؤال 5.</p>
+      <div class="ref-grid">
+        <div class="ref-box">
+          <h3>⚡ Serverless Computing (س5، س41، س42، س43)</h3>
+          <ul>
+            <li><b>المفهوم (س5):</b> مش معناها مفيش سيرفرات فيزيائية! معناها المطور بيشغل الدوال (<bdi class="en">Functions</bdi>) بـ <b>اهتمامات أقل بإدارة السيرفرات (<bdi class="en">Fewer server-level management concerns</bdi>)</b>.</li>
+            <li><b>التوفير المالي (س41):</b> للمهام المتقطعة السريعة، نستخدم <bdi class="en">On-demand serverless function with usage-based billing</bdi> عشان مندفعش في سيرفر شغال 24 ساعة ع الفاضي.</li>
+            <li><b>علاقتها بالـ Microservices (س42):</b> الـ <bdi class="en">Microservices</bdi> تحدد حدود وتقسيم الخدمات (<bdi class="en">Service boundaries</bdi>)، بينما الـ <bdi class="en">Serverless</bdi> توصف نموذج التشغيل والبنية التحتية (<bdi class="en">Execution & infrastructure model</bdi>).</li>
+            <li><b>مشكلة الـ <bdi class="en">Vendor Lock-In</bdi> (س43):</b> صعوبة نقل التطبيق بين مزودي السحابة بسبب الاعتماد على خدمات وصيغ أحداث حصرية (<bdi class="en">Proprietary event formats</bdi>).</li>
+          </ul>
+        </div>
+        <div class="ref-box">
+          <h3>⛓️ كشف التلاعب والإجماع في Blockchain (س44، س45، س46)</h3>
+          <ul>
+            <li><b>كشف التزوير (س44):</b> كل كتلة ليها بصمة (<bdi class="en">Cryptographic hash</bdi>) ومربوطة باللي بعدها؛ تعديل أي كتلة قديمة يغير الـ <bdi class="en">Hash</bdi> بتاعها ويبوظ تطابق السلسلة كلها.</li>
+            <li><b><bdi class="en">Proof of Stake (PoS)</bdi> (س45):</b> اختيار المدققين (<bdi class="en">Validators</bdi>) لتأكيد الكتل بناءً على الحصة المحجوزة (<bdi class="en">Committed stake</bdi>). (بينما <bdi class="en">PoW</bdi> يعتمد على التعدين والطاقة).</li>
+            <li><b>بلوكتشين الشركات (س46):</b> لما نقيد التحقق على مؤسسات معتمدة مسبقاً، دي شبكة بتصريح (<bdi class="en">Permissioned participation model</bdi>).</li>
+          </ul>
+        </div>
+        <div class="ref-box">
+          <h3>🎓 الشهادات، المحفظة، والـ Web3 (س47، س48، س49، س50)</h3>
+          <ul>
+            <li><b>بصمة الشهادة (س47):</b> تسجيل الـ <bdi class="en">Cryptographic fingerprint</bdi> للشهادة على البلوكتشين هدفه <b>التحقق من أن الشهادة المقدمة تطابق البصمة المسجلة</b> (مش إثبات صحة الكلام جواها).</li>
+            <li><b>دور المحفظة <bdi class="en">Wallet</bdi> (س48):</b> إدارة مفاتيح التشفير والتوقيع لاعتماد المعاملات (<bdi class="en">Manage cryptographic keys and authorize transactions</bdi>).</li>
+            <li><b>حقيقة تطبيقات <bdi class="en">Web3</bdi> (س49):</b> لو استخدم عقود ذكية بس بواجهة مستضافة مركزياً ومزود بيانات واحد، يبقى فيه مكونات لامركزية بس <b>لسه عنده اعتماديات مركزية (<bdi class="en">Centralized dependencies</bdi>)</b>.</li>
+            <li><b>المعمارية الهجينة (س50):</b> نجمع <bdi class="en">Microservices</bdi> (لتقسيم الخدمات) + <bdi class="en">Serverless</bdi> (لتشغيل الأحداث) + <bdi class="en">Blockchain</bdi> (لتوثيق السجلات المشتركة) لأن كل تقنية بتحل متطلب مختلف.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Custom Confirmation Modal -->
+<div id="confirmModal" class="modal-backdrop hide">
+  <div class="modal-box">
+    <h3 id="modalTitle">تأكيد</h3>
+    <p id="modalMsg"></p>
+    <div class="modal-actions">
+      <button class="btn" id="modalCancel">إلغاء (Cancel)</button>
+      <button class="btn pri" id="modalOk">موافق (Continue)</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const Q = [
+  {
+    "q": "Which statement of BEST describes the evolution of the Web Technologies?",
+    "o": [
+      "From distributed systems to static documents",
+      "From AI systems to information retrieval",
+      "From information delivery toward computation, intelligence, and action",
+      "From cloud computing toward static applications"
+    ],
+    "a": 2,
+    "e": {
+      "y": "الويب بدأ زمان (Web 1.0) كصفحات ثابتة هدفها بس توصيل وعرض المعلومات ({Information delivery}). مع الوقت اتطور لتطبيقات بتحسب وتعالج بيانات ({Computation})، وبعدين دخل فيه الذكاء الاصطناعي ({Intelligence})، لحد ما وصلنا للويب اللي بياخد قرارات وينفذ أفعال حقيقية ({Action}).",
+      "w": [
+        "ده عكس التاريخ تماماً؛ الويب بدأ بوثائق ثابتة ({Static documents}) واتطور لأنظمة موزعة مش العكس.",
+        "الترتيب هنا مقلوب؛ استرجاع المعلومات كان هو البداية، والذكاء الاصطناعي ({AI systems}) جه في المراحل المتقدمة.",
+        null,
+        "مفيش تطور بيرجع لورا من الحوسبة السحابية للتطبيقات الثابتة."
+      ],
+      "t": "مسار تطور الويب دايماً لقدام: من {Information delivery} ⬅️ إلى {Computation, intelligence, and action}."
+    }
+  },
+  {
+    "q": "A Web application needs continuous two-way communication between the browser and server. Which technology is MOST appropriate?",
+    "o": ["SSE", "REST", "WebSockets", "SSG"],
+    "a": 2,
+    "e": {
+      "y": "لما نحتاج اتصال مستمر وفي الاتجاهين في نفس اللحظة ({Continuous two-way communication}) زي تطبيقات الشات أو الألعاب الأونلاين، بنستخدم {WebSockets} لأنها بتفتح خط اتصال مباشر مفتوح بين المتصفح والسيرفر يقدروا يبعتوا فيه لبعض في أي وقت (زي مكالمة التليفون).",
+      "w": [
+        "تقنية {SSE (Server-Sent Events)} بتفتح قناة في اتجاه واحد بس (من السيرفر للمتصفح) ومينفعش المتصفح يبعت فيها.",
+        "الـ {REST} ماشي بنظام طلب ورد منفصل ({Request-Response})؛ المتصفح يسأل والسيرفر يرد ويقفل، فمش اتصال مستمر.",
+        null,
+        "الـ {SSG} دي طريقة بناء صفحات ثابتة ملهاش علاقة ببروتوكولات الاتصال اللحظي."
+      ],
+      "t": "أول ما تلمح {Continuous two-way communication} بين المتصفح والسيرفر ⬅️ اختار فوراً {WebSockets}."
+    }
+  },
+  {
+    "q": "Which architecture generates the page on the server before sending it to the browser?",
+    "o": ["SPA", "SSR", "SSG", "PWA"],
+    "a": 1,
+    "e": {
+      "y": "في الـ {SSR (Server-Side Rendering)}، لما المستخدم يطلب الصفحة، السيرفر هو اللي بيجهز ويطبخ كود الـ {HTML} بالكامل بالبيانات اللي فيه قبل ما يبعته جاهز للمتصفح عشان يعرضه علطول.",
+      "w": [
+        "الـ {SPA (Single Page Application)} بيعتمد على {CSR}، يعني السيرفر بيبعت صفحة فاضية وملفات {JavaScript}، والمتصفح هو اللي بيبني الصفحة عند المستخدم.",
+        null,
+        "الـ {SSG} بيجهز الصفحات وقت بناء المشروع ({Build time}) قبل ما المستخدمين يدخلوا أصلاً، لكن المصطلح المعماري الأساسي لتوليد الصفحة على السيرفر لإرسالها للمتصفح هو {SSR}.",
+        "الـ {PWA (Progressive Web App)} بيخلي الموقع يشتغل بتجربة شبه تطبيقات الموبايل، ومش بيحدد مكان توليد الصفحة."
+      ],
+      "t": "توليد الصفحة على السيرفر ({Generates on the server}) قبل إرسالها للمتصفح ⬅️ {SSR}."
+    }
+  },
+  {
+    "q": "A smart transportation system requires very low latency and processing close to connected devices. Which approach is MOST appropriate?",
+    "o": [
+      "Centralized cloud processing only",
+      "Edge computing",
+      "Static site generation",
+      "Server-side rendering"
+    ],
+    "a": 1,
+    "e": {
+      "y": "أنظمة النقل الذكية والعربيات المتصلة مينفعش تستنى البيانات تسافر لمركز بيانات سحابي بعيد وترجع، لأنها محتاجة استجابة لحظية بدون تأخير ({Very low latency}). عشان كدا بنعالج البيانات في مكان الحدث جنب الأجهزة نفسها ({Close to connected devices})، وده تعريف الـ {Edge computing}.",
+      "w": [
+        "السحابة المركزية ({Centralized cloud}) بعيدة جغرافياً، فإرسال البيانات ليها بيعمل تأخير ({High latency}) خطر على نظام مرور ذكي.",
+        null,
+        "الـ {SSG} خاص ببناء مواقع الويب الثابتة ومالوش علاقة بمعالجة بيانات الحساسات والأجهزة.",
+        "الـ {SSR} خاص بعرض صفحات الويب على السيرفر ومش مخصص لأنظمة إنترنت الأشياء والنقل الذكي."
+      ],
+      "t": "{Very low latency} + {Processing close to devices} ⬅️ وش كده {Edge computing}."
+    }
+  },
+  {
+    "q": "Which statement BEST describes serverless computing?",
+    "o": [
+      "Applications operate without physical servers",
+      "Developers must manually manage all servers",
+      "Developers run application functions with fewer server-level management concerns",
+      "Applications execute only inside the browser"
+    ],
+    "a": 2,
+    "e": {
+      "y": "كلمة {Serverless} مش معناها إن مفيش سيرفرات في الحقيقة! السيرفرات موجودة طبعاً عند مزود الخدمة (زي AWS أو Google)، لكن الفكرة إن المطور بيركز في كتابة وتشغيل الدوال البرمجية ({Application functions}) من غير ما يشغل باله بإدارة السيرفرات وتحديثها وتوسيعها ({Fewer server-level management concerns}).",
+      "w": [
+        "ده الفخ المشهور في الاسم: مفيش كود سحابي بيشتغل في الهوا من غير سيرفرات فيزيائية ({Physical servers}).",
+        "ده عكس الـ {Serverless} تماماً؛ الإدارة اليدوية للسيرفرات دي في الاستضافة التقليدية.",
+        null,
+        "الكود في الـ {Serverless} بيشتغل على سيرفرات السحابة وقت الطلب، مش جوه متصفح المستخدم."
+      ],
+      "t": "{Serverless} = السيرفرات موجودة بس مزود السحابة شايل عنك هم إدارتها ({Fewer server management concerns})."
+    }
+  },
+  {
+    "q": "Which technology is MOST suitable for computationally intensive code running in a Web environment?",
+    "o": ["REST", "SSE", "WebAssembly", "SEO"],
+    "a": 2,
+    "e": {
+      "y": "لما نحب نشغل برامج تقيلة جداً في الحسابات ({Computationally intensive code}) جوه المتصفح (زي مونتاج فيديو، ألعاب 3D، أو محاكاة هندسية)، الـ {JavaScript} العادية ممكن تبطأ. هنا بنستخدم {WebAssembly (Wasm)} لأنها بتشغل الكود بصيغة ثنائية ({Binary}) سريعة جداً قريبة من سرعة الجهاز الأصلية.",
+      "w": [
+        "الـ {REST} هو أسلوب تصميم {APIs} للتواصل بين الكلاينت والسيرفر، مش لتسريع العمليات الحسابية.",
+        "الـ {SSE} تقنية لإرسال تحديثات من السيرفر للمتصفح.",
+        null,
+        "الـ {SEO} هو تحسين ظهور الموقع في محركات البحث زي جوجل."
+      ],
+      "t": "كود حساباته تقيلة جوه المتصفح ({Computationally intensive code in Web}) ⬅️ {WebAssembly}."
+    }
+  },
+  {
+    "q": "What is the primary role of WebGPU in modern Web applications?",
+    "o": [
+      "Managing databases in the browser",
+      "Creating REST APIs",
+      "Providing access to GPU capabilities for graphics and parallel computation",
+      "Generating static Web pages"
+    ],
+    "a": 2,
+    "e": {
+      "y": "كارت الشاشة ({GPU}) قوته الأساسية إنه بيقدر يعمل آلاف الحسابات في نفس اللحظة بالتوازي ({Parallel computation}) بجانب الرسومات. تقنية {WebGPU} بتفتح الباب لصفحة الويب إنها تستغل قدرات كارت الشاشة مباشرة سواء للجرافيكس العالي أو لتشغيل نماذج الذكاء الاصطناعي جوه المتصفح.",
+      "w": [
+        "قواعد البيانات في المتصفح بتتدار بـ {IndexedDB} أو {LocalStorage} مش بـ {WebGPU}.",
+        "الـ {REST APIs} بتتعمل على السيرفر للربط بين الأنظمة.",
+        null,
+        "توليد الصفحات الثابتة دي شغلة الـ {SSG}."
+      ],
+      "t": "{WebGPU} = وصول لقدرات الـ {GPU} عشان حاجتين: {Graphics} + {Parallel computation}."
+    }
+  },
+  {
+    "q": "Which sequence BEST represents the RAG process discussed in the lecture?",
+    "o": [
+      "Question → LLM → Retrieval → Context → Response",
+      "Question → Retrieval → Context → LLM → Grounded Response",
+      "Retrieval → Question → LLM → Database → Response",
+      "Question → Context → Browser → Retrieval → Response"
+    ],
+    "a": 1,
+    "e": {
+      "y": "فكرة الـ {RAG (Retrieval-Augmented Generation)} عاملة زي امتحان الـ Open-Book: الأول المستخدم بيسأل السؤال ({Question}) ➡️ السيستم يروح يبحث ويسترجع المعلومات الصح من الملفات ({Retrieval}) ➡️ يرتب المعلومات دي في سياق واضح ({Context}) ➡️ يبعت السؤال مع السياق للذكاء الاصطناعي ({LLM}) ➡️ فيطلع إجابة دقيقة ومسنودة لمصدر ({Grounded Response}).",
+      "w": [
+        "هنا ودى السؤال للـ {LLM} قبل ما يبحث ({Retrieval})، وده غلط لأن الـ {LLM} كدا هيجاوب من دماغه قبل ما يشوف المرجع.",
+        null,
+        "مستحيل نعمل بحث ({Retrieval}) قبل ما المستخدم يسأل السؤال ({Question}) أصلاً!",
+        "السياق ({Context}) مبيتكونش غير بعد عملية البحث ({Retrieval})، وكمان الـ {Browser} مش خطوة في النص."
+      ],
+      "t": "ترتيب الـ {RAG} المنطقي: اسأل ({Question}) ⬅️ ابحث ({Retrieval}) ⬅️ جهز السياق ({Context}) ⬅️ ابعت للـ {LLM} ⬅️ خد {Grounded Response}."
+    }
+  },
+  {
+    "q": "Which of the following is an advantage of moving AI processing closer to or into the browser?",
+    "o": [
+      "Increased dependence on cloud communication",
+      "Increased network latency",
+      "Improved data locality and reduced network latency",
+      "Elimination of local computation"
+    ],
+    "a": 2,
+    "e": {
+      "y": "لما نشغل الذكاء الاصطناعي جوه المتصفح أو على جهاز المستخدم نفسه بدل ما نبعت كل حاجة للسحابة، بنستفيد ميزتين كبار: أولاً البيانات بتفضل في مكانها عند المستخدم فده بيحافظ على الخصوصية ({Improved data locality})، وثانياً مبنستناش البيانات تروح وترجع في الشبكة فوقت التأخير بيقل جداً ({Reduced network latency}).",
+      "w": [
+        "ده عكس اللي بيحصل؛ المعالجة في المتصفح بتقلل اعتمادنا على السحابة مش بتزوده.",
+        "وقت تأخير الشبكة ({Network latency}) بيقل جداً مش بيزيد.",
+        null,
+        "إحنا بنزود المعالجة المحلية ({Local computation}) مش بنلغيها."
+      ],
+      "t": "تشغيل الـ {AI} في المتصفح = داتا في مكانها ({Improved data locality}) + سرعة بدون تأخير شبكة ({Reduced network latency})."
+    }
+  },
+  {
+    "q": "Which statement BEST distinguishes the Agentic Web from earlier AI-powered Web applications?",
+    "o": [
+      "It focuses mainly on displaying static AI-generated content",
+      "It eliminates the need for APIs and external systems",
+      "It limits AI to answering user questions",
+      "It enables AI systems to reason, use tools, and perform actions"
+    ],
+    "a": 3,
+    "e": {
+      "y": "تطبيقات الـ {AI} الأولى كانت مجرد شات بوت تسأله سؤال يرد عليك بنص وخلاص. أما الـ {Agentic Web} (الويب الوكيل)، فالـ {AI} بقى عنده قدرة يفكر ويخطط ({Reason})، ويمسك أدوات ويكلم أنظمة تانية ({Use tools})، وينفذ أفعال حقيقية بالنيابة عنك ({Perform actions}) زي إنه يحجزلك تذكرة أو يبعت إيميل.",
+      "w": [
+        "عرض محتوى ثابت ده مش {Agentic Web} خالص.",
+        "بالعكس، الـ {AI Agents} بتعتمد بشكل أساسي على الـ {APIs} والأنظمة الخارجية كأدوات ({Tools}) عشان تنفذ المهام.",
+        "حصر الـ {AI} في الرد على الأسئلة بس ده وصف الجيل القديم من الشات بوتس.",
+        null
+      ],
+      "t": "الـ {Agentic Web} بيتلخص في 3 كلمات: يفكر ({Reason}) + يستخدم أدوات ({Use tools}) + ينفذ أفعال ({Perform actions})."
+    }
+  },
+  {
+    "q": "A web application separates its user interface, business logic, and database management into distinct tiers. Which architectural concept does this BEST represent?",
+    "o": [
+      "Islands Architecture",
+      "Single Page Application",
+      "Multi-Tier Architecture",
+      "Static Site Generation"
+    ],
+    "a": 2,
+    "e": {
+      "y": "لما نقسم التطبيق لـ 3 طبقات منفصلة وواضحة ({Distinct tiers}): طبقة للواجهة ({User Interface})، وطبقة لمنطق الشغل والحسابات ({Business Logic})، وطبقة لقاعدة البيانات ({Database Management})، التصميم الكلاسيكي المنظم ده اسمه المعمارية متعددة الطبقات ({Multi-Tier Architecture}).",
+      "w": [
+        "الـ {Islands Architecture} بتخص تقليل الـ {JavaScript} في صفحات الويب الثابتة، مش فصل السيستم لطبقات معمارية.",
+        "الـ {SPA} بيوصف طريقة عرض الواجهة في صفحة واحدة جوه المتصفح.",
+        null,
+        "الـ {SSG} هي طريقة توليد صفحات ثابتة وقت الـ {Build}."
+      ],
+      "t": "فصل الـ {UI} والـ {Business logic} والـ {Database} في طبقات منفصلة ({Distinct tiers}) ⬅️ {Multi-Tier Architecture}."
+    }
+  },
+  {
+    "q": "A highly interactive dashboard frequently retrieves data through APIs and updates the interface without full page reloads. Which approach is MOST suitable?",
+    "o": ["SSG", "CSR", "Static HTML only", "Build time rendering"],
+    "a": 1,
+    "e": {
+      "y": "لوحة التحكم ({Dashboard}) طبيعتها إنها تفاعلية جداً ({Highly interactive})، وكل شوية بتجيب أرقام جديدة من الـ {APIs} وتحدث الرسوم البيانية والشاشة فوراً من غير ما الصفحة كلها تعمل Reload ({Without full page reloads}). ده الملعب الأساسي للـ {CSR (Client-Side Rendering)} لأن الـ {JavaScript} في المتصفح هي اللي بتحدث الأجزاء اللي اتغيرت بس بنعومة.",
+      "w": [
+        "الـ {SSG} بيطلع صفحات ثابتة مجهزة مسبقاً، فمش هينفع لداشبورد بياناتها بتتغير كل ثانية.",
+        null,
+        "الـ {Static HTML} مفيهوش ديناميكية وتحديث لحظي للواجهة من غير إعادة تحميل.",
+        "الـ {Build time rendering} هو نفسه الـ {SSG}، بيجهز الصفحة مرة واحدة وقت البناء."
+      ],
+      "t": "{Interactive dashboard} + {Updates without full page reloads} ⬅️ {CSR}."
+    }
+  },
+  {
+    "q": "A public product page requires frequently updated information and strong search engine visibility. Which rendering strategy is MOST appropriate?",
+    "o": ["CSR only", "SSR", "SSG only", "Islands Architecture only"],
+    "a": 1,
+    "e": {
+      "y": "صفحة منتج عامة على متجر إلكتروني عندها شرطين مع بعض: أولاً لازم تظهر بقوة في بحث جوجل ({Strong search engine visibility / SEO})، وثانياً سعر المنتج والكمية المتاحة بيتغيروا باستمرار ({Frequently updated}). الحل المثالي هنا هو {SSR} لأن السيرفر هيبعت الصفحة كاملة وجاهزة لعناكب جوجل وفيها أحدث سعر لحظة ما اليوزر يطلبها.",
+      "w": [
+        "الـ {CSR only} بيبعت صفحة فاضية تتبني بالـ {JS}، وده بيضعف الـ {SEO} وممكن يأخر ظهور المحتوى.",
+        null,
+        "الـ {SSG only} بيجهز الصفحة قبل الطلب، فمش هيلاحق على التحديثات المستمرة في الأسعار والمخزون.",
+        "الـ {Islands Architecture} بتركز على تقليل الـ {JS} في الصفحات شبه الثابتة مش حل مشكلة الداتا المتغيرة باستمرار مع الـ {SEO}."
+      ],
+      "t": "محتوى بيتغير كتير ({Frequently updated}) + محتاج ظهور قوي في البحث ({Strong SEO}) ⬅️ {SSR}."
+    }
+  },
+  {
+    "q": "A documentation website changes infrequently and must provide very fast page delivery with minimal server processing. Which strategy is MOST appropriate?",
+    "o": ["CSR", "SSR", "SSG", "Micro Frontends"],
+    "a": 2,
+    "e": {
+      "y": "مواقع التوثيق والشروحات ({Documentation website}) محتواها ثابت ونادراً ما بيتغير ({Changes infrequently}). فبدل ما نخلي السيرفر يطبخ الصفحة مع كل زائر، بنستخدم {SSG (Static Site Generation)} عشان نولّد كل الصفحات مرة واحدة وقت الـ {Build}، فتتبعت للزوار بسرعة صاروخية وبأقل مجهود ممكن من السيرفر ({Minimal server processing}).",
+      "w": [
+        "الـ {CSR} هيخلي متصفح الزائر يحمل {JS} ويبني الصفحة على جهازه من غير داعي.",
+        "الـ {SSR} هيخلي السيرفر يعيد بناء نفس الصفحة الثابتة مع كل طلب، وده استهلاك سيرفر ملوش لازمة.",
+        null,
+        "الـ {Micro Frontends} معمارية لتقسيم شغل الواجهات الضخمة بين فرق متعددة، مش استراتيجية لتسريع موقع توثيق."
+      ],
+      "t": "{Changes infrequently} + {Fast delivery & minimal server processing} ⬅️ {SSG}."
+    }
+  },
+  {
+    "q": "Which statement BEST distinguishes SSR from SSG?",
+    "o": [
+      "SSR occurs in the browser, while SSG occurs on the server",
+      "SSR generates pages at request time, while SSG generates them before user requests",
+      "SSR requires JavaScript, while SSG never uses JavaScript",
+      "SSR is used only for SPAs, while SSG is used only for APIs"
+    ],
+    "a": 1,
+    "e": {
+      "y": "الاتنين ({SSR} و {SSG}) بيجهزوا الـ {HTML} بره المتصفح، أمال إيه الفرق الجوهري بينهم؟ الفرق كله في **التوقيت**: الـ {SSR} بيولّد الصفحة لحظة ما المستخدم يطلبها ({At request time})، بينما الـ {SSG} بيولّد الصفحات مسبقاً وقت بناء المشروع قبل ما أي مستخدم يطلبها أصلاً ({Before user requests}).",
+      "w": [
+        "غلطة شائعة؛ الـ {SSR} بيحصل على السيرفر مش في المتصفح (اللي في المتصفح ده {CSR}).",
+        null,
+        "الاتنين يقدروا يستخدموا {JavaScript} عادي جداً للتفاعلية بعد ما الصفحة تتعرض.",
+        "الـ {SSG} بيولد صفحات ويب ثابتة مش {APIs}، والـ {SSR} مش حكر على الـ {SPAs}."
+      ],
+      "t": "الفرق في التوقيت: {SSR} = وقت الطلب ({At request time}) | {SSG} = قبل الطلب ({Before user requests})."
+    }
+  },
+  {
+    "q": "An e commerce application uses SSG for its home page, SSR for product pages, and CSR for the user dashboard. This is an example of:",
+    "o": [
+      "Monolithic Rendering",
+      "Micro Frontends",
+      "Client Server Architecture only",
+      "Hybrid Rendering"
+    ],
+    "a": 3,
+    "e": {
+      "y": "لما تطبيق واحد ذكي يدمج أكتر من طريقة عرض مع بعض بحيث يدي كل صفحة الطريقة اللي تناسبها (الرئيسية الثابتة بـ {SSG}، والمنتجات المتغيرة اللي محتاجة {SEO} بـ {SSR}، ولوحة تحكم المستخدم التفاعلية بـ {CSR})، الخليط ده بنسميه الريندر الهجين ({Hybrid Rendering}).",
+      "w": [
+        "الـ {Monolithic} معناه الاعتماد على كتلة أو طريقة واحدة لكل حاجة، وده عكس التنوع الموجود في السؤال.",
+        "الـ {Micro Frontends} معناه تقسيم الواجهة بين فرق عمل مستقلة، مش خلط طرق الريندر.",
+        "مصطلح عام جداً مبيوصفش الجمع بين {SSG} و {SSR} و {CSR}.",
+        null
+      ],
+      "t": "جمع {SSG} + {SSR} + {CSR} في نفس الموقع كل صفحة حسب احتياجها ⬅️ {Hybrid Rendering}."
+    }
+  },
+  {
+    "q": "A mostly static page contains only a few interactive components, and the development team wants to minimize unnecessary JavaScript. Which approach BEST fits this requirement?",
+    "o": [
+      "Micro Frontends",
+      "CSR for the entire page",
+      "Islands Architecture",
+      "Multi-Tier Architecture"
+    ],
+    "a": 2,
+    "e": {
+      "y": "تخيل صفحة 90% منها كلام وصور ثابتة ({Mostly static page})، وفيها بس زرارين أو كارت تفاعلي صغير. حرام نحمل {JavaScript} تقيل للصفحة كلها! هنا بنستخدم معمارية الجزر ({Islands Architecture}): بنبعت الصفحة كلها {HTML} ثابت وخفيف (كأنه بحر هادي)، ونشغل الـ {JavaScript} بس في الجزر الصغيرة التفاعلية ({Interactive components}).",
+      "w": [
+        "الـ {Micro Frontends} لتقسيم الشغل بين عدة فرق في المشاريع الضخمة، ومش هدفها تقليل الـ {JS} في صفحة ثابتة.",
+        "تشغيل {CSR} للصفحة كلها هيبعت {JavaScript} كتير ملوش لازمة، وده عكس طلب الفريق تماماً.",
+        null,
+        "الـ {Multi-Tier Architecture} بتفصل الواجهة عن البيزنس والداتابيز، وملهاش علاقة بكمية الـ {JS} في الصفحة."
+      ],
+      "t": "صفحة معظمها ثابت ({Mostly static}) + أجزاء تفاعلية قليلة + تقليل الـ {JS} ⬅️ {Islands Architecture}."
+    }
+  },
+  {
+    "q": "A very large web application is developed by several teams. Each team needs greater independence in developing and maintaining a different frontend module. Which architecture BEST addresses this requirement?",
+    "o": ["SSG", "SSR", "Micro Frontends", "Client-Side Rendering"],
+    "a": 2,
+    "e": {
+      "y": "لما يكون عندنا موقع ضخم جداً وشغال عليه فرق كتير ({Several teams})، لو كلهم عدلوا في كود واجهة واحد هيعطلوا بعض. الحل هو {Micro Frontends}: بنقسم الواجهة الأمامية لوحدات مستقلة ({Frontend modules})، بحيث كل فريق يبني ويحدث وينشر الجزء بتاعه باستقلالية تامة ({Independence}).",
+      "w": [
+        "الـ {SSG} طريقة توليد صفحات ثابتة مش لتنظيم الفرق.",
+        "الـ {SSR} طريقة ريندر على السيرفر مش لتقسيم الواجهة بين الفرق.",
+        null,
+        "الـ {CSR} بيحدد مكان بناء الصفحة في المتصفح، ومش بيحل مشكلة استقلالية الفرق المتعددة."
+      ],
+      "t": "عدة فرق ({Several teams}) + استقلالية ({Independence}) + وحدات واجهة ({Frontend modules}) ⬅️ {Micro Frontends}."
+    }
+  },
+  {
+    "q": "Which factor should MOST appropriately drive the selection of a web application architecture?",
+    "o": [
+      "Using the newest available technology",
+      "Using the framework with the most features",
+      "Using the same architecture for all applications",
+      "The application's requirements and architectural trade offs"
+    ],
+    "a": 3,
+    "e": {
+      "y": "في هندسة البرمجيات مفيش معمارية اسمها \"الأحسن في المطلق\". اختيار أي معمارية صح لازم يعتمد على متطلبات التطبيق نفسه ({Application's requirements}) والموازنة بين المميزات والعيوب لكل اختيار ({Architectural trade-offs}) زي السرعة، التكلفة، والـ {SEO}.",
+      "w": [
+        "الجري ورا أحدث تقنية وخلاص ({Newest technology}) ممكن يلبس الفريق في تقنية غير مناسبة لمشروعهم.",
+        "اختيار الفريمورك اللي فيه مميزات كتير ممكن يعقد المشروع ويبطأه لو إحنا مش محتاجينها.",
+        "مستحيل معمارية واحدة تنفع لكل أنواع التطبيقات (موقع توثيق غير متجر غير داشبورد).",
+        null
+      ],
+      "t": "أي قرار معماري صح بيتبني على: المتطلبات ({Requirements}) + الموازنة بين المزايا والعيوب ({Trade-offs})."
+    }
+  },
+  {
+    "q": "Which statement BEST describes the relationship between a web framework and web application architecture?",
+    "o": [
+      "Selecting a framework automatically determines the entire architecture",
+      "Framework and architecture are identical concepts",
+      "Architecture is determined only by the programming language",
+      "A framework provides implementation capabilities, while architecture involves broader design decisions"
+    ],
+    "a": 3,
+    "e": {
+      "y": "لازم نفرق بين الخريطة الهندسية وبين العِدّة والأدوات: المعمارية ({Architecture}) هي القرارات التصميمية الواسعة والشاملة للنظام ككل ({Broader design decisions})، بينما إطار العمل ({Framework}) زي React أو Next.js أو Angular هو الأداة اللي بتدينا إمكانيات التنفيذ البرمجي ({Implementation capabilities}).",
+      "w": [
+        "اختيار الفريمورك لوحده مبيحسمش كل قرارات المعمارية للنظام.",
+        "المفهومين مش متطابقين؛ المعمارية تصميم شامل والفريمورك أداة تنفيذ.",
+        "المعمارية لا تتحدد بلغة البرمجة فقط، بل بمتطلبات النظام وتوزيع أجزائه.",
+        null
+      ],
+      "t": "الـ {Framework} = أدوات تنفيذ ({Implementation}) | الـ {Architecture} = قرارات تصميم أشمل ({Broader design decisions})."
+    }
+  },
+  {
+    "q": "A web application needs to retrieve product information using standardized HTTP methods and resource URLs. Which API approach is MOST appropriate?",
+    "o": ["GraphQL", "REST", "WebRTC", "WebTransport"],
+    "a": 1,
+    "e": {
+      "y": "أول ما تشوف التعامل مع البيانات على إنها موارد ليها روابط واضحة ({Resource URLs} زي `/products/10`) مع استخدام أوامر {HTTP} القياسية ({Standardized HTTP methods} زي {GET}, {POST}, {DELETE})، فده التعريف القياسي والمباشر لـ {REST}.",
+      "w": [
+        "الـ {GraphQL} بيعتمد على رابط واحد ({Single endpoint}) واستعلامات يحدد فيها الكلاينت الحقول اللي عايزها.",
+        null,
+        "الـ {WebRTC} مخصص لبث الصوت والفيديو المباشر بين المتصفحات ({Peer-to-Peer}).",
+        "الـ {WebTransport} بروتوكول نقل منخفض التأخير للألعاب والبث، مش لجلب الموارد الروتينية عبر روابط {HTTP} قياسية."
+      ],
+      "t": "{Standardized HTTP methods} + {Resource URLs} ⬅️ {REST}."
+    }
+  },
+  {
+    "q": "Which REST principle requires each request to contain the information necessary for the server to process it?",
+    "o": [
+      "Cacheability",
+      "Layered System",
+      "Uniform Interface",
+      "Stateless Communication"
+    ],
+    "a": 3,
+    "e": {
+      "y": "مبدأ عدم الاحتفاظ بالحالة ({Stateless Communication}) في الـ {REST} معناه إن السيرفر مبيحفظش في ذاكرته تاريخ طلبات العميل السابقة. عشان كدا، كل طلب ({Request}) لازم يجي شايل معاه كل المعلومات اللازمة (زي التوكن والبيانات) عشان السيرفر يفهمه ويعالجه لوحده بشكل مستقل.",
+      "w": [
+        "الـ {Cacheability} يخص إمكانية تخزين الردود مؤقتاً لتسريع الطلبات المتكررة.",
+        "الـ {Layered System} يعني وجود طبقات وسيطة (زي Load Balancers أو Gateways) بين الكلاينت والسيرفر.",
+        "الـ {Uniform Interface} يخص توحيد طريقة التعامل مع الموارد والروابط.",
+        null
+      ],
+      "t": "كل {Request} شايل كل معلوماته والسيرفر مبيحفظش حالة الجلسة ⬅️ {Stateless Communication}."
+    }
+  },
+  {
+    "q": "A client needs to update only the price of an existing product without replacing its complete representation. Which HTTP method is MOST appropriate?",
+    "o": ["POST", "PUT", "PATCH", "GET"],
+    "a": 2,
+    "e": {
+      "y": "في التعديل عندنا أمرين مهمين: لو هتشيل المنتج القديم وتحط مكانه نسخة كاملة جديدة بكل بياناته بنستخدم {PUT}. لكن لو عايز تعمل **تعديل جزئي** ({Partial update}) يعني تغير حقل واحد بس زي السعر ({Update ONLY the price}) من غير ما تبعت وتستبدل باقي بيانات المنتج، الأمر المخصص لده هو {PATCH}.",
+      "w": [
+        "الـ {POST} بيستخدم لإنشاء مورد جديد ({Create new resource}).",
+        "الـ {PUT} بيستبدل التمثيل الكامل للمورد ({Replaces complete representation}).",
+        null,
+        "الـ {GET} للقراءة وجلب البيانات فقط ومبيعدلش أي حاجة."
+      ],
+      "t": "تعديل حقل واحد فقط ({Update ONLY price / Partial update}) ⬅️ {PATCH} | استبدال كامل ⬅️ {PUT}."
+    }
+  },
+  {
+    "q": "An API successfully creates a new resource. Which HTTP status code is MOST appropriate?",
+    "o": ["201 Created", "200 OK", "204 No Content", "202 Accepted"],
+    "a": 0,
+    "e": {
+      "y": "لما الـ {API} ينجح في إنشاء مورد جديد فعلياً في قاعدة البيانات ({Successfully creates a new resource})، كود الاستجابة القياسي والأدق هو {201 Created}.",
+      "w": [
+        null,
+        "كود {200 OK} يدل على نجاح طلب عادي (زي جلب بيانات بـ {GET} أو تعديل)، لكنه مش الأدق لتأكيد إنشاء مورد جديد.",
+        "كود {204 No Content} معناه الطلب نجح بس مفيش أي بيانات راجعة في الرد (بيستخدم غالباً مع الـ {DELETE}).",
+        "كود {202 Accepted} معناه السيرفر استلم الطلب وحطه في الطابور عشان يعالجه في الخلفية بس لسه مخلصش إنشاؤه."
+      ],
+      "t": "إنشاء مورد جديد بنجاح ({Creates a new resource}) ⬅️ {201 Created}."
+    }
+  },
+  {
+    "q": "A mobile application requires different combinations of user information across multiple screens while minimizing unnecessary data retrieval. Which API approach BEST addresses this requirement?",
+    "o": [
+      "REST with fixed response structures",
+      "GraphQL with client-selected fields",
+      "gRPC with predefined service methods",
+      "WebSockets with persistent connections"
+    ],
+    "a": 1,
+    "e": {
+      "y": "تطبيقات الموبايل بتحتاج توفر في استهلاك الباقة، وكل شاشة فيها بتعرض تركيبة بيانات مختلفة. بدل ما نستخدم {REST} ويرجعلنا بيانات ثابتة كتير ملهاش لازمة ({Over-fetching})، بنستخدم {GraphQL} لأنه بيسمح للموبايل يحدد وينقي الحقول اللي محتاجها بالظبط في كل شاشة ({Client-selected fields}).",
+      "w": [
+        "الـ {REST} بيرجع هيكل بيانات ثابت ({Fixed response})، فهيبعت للموبايل بيانات زيادة مش محتاجها.",
+        null,
+        "الـ {gRPC} ممتاز بين السيرفرات الداخلية، ومبني على دوال محددة مسبقاً مش اختيار حر للحقول من الموبايل.",
+        "الـ {WebSockets} مخصصة للاتصال اللحظي المستمر، مش لتفصيل الحقول المطلوبة في الشاشات."
+      ],
+      "t": "شاشات متعددة محتاجة تركيبات داتا مختلفة بدون داتا زيادة ⬅️ {GraphQL with client-selected fields}."
+    }
+  },
+  {
+    "q": "Which component of a GraphQL implementation is responsible for retrieving or computing the value of a requested field?",
+    "o": ["Schema", "Mutation", "Subscription", "Resolver"],
+    "a": 3,
+    "e": {
+      "y": "في الـ {GraphQL}، لما الكلاينت يطلب حقل معين (زي `user.name`)، مين اللي بيروح فعلياً لقاعدة البيانات يجيب القيمة دي أو يحسبها؟ الدالة المسؤولة عن تنفيذ ده اسمها الـ {Resolver}.",
+      "w": [
+        "الـ {Schema} هو مجرد العقد أو الخريطة اللي بتوصف أسماء الحقول وأنواعها، بس مش هو اللي بينفذ الكود ويجيب الداتا.",
+        "الـ {Mutation} هو نوع العملية لما نحب نعدل أو نضيف أو نمسح بيانات.",
+        "الـ {Subscription} بيستخدم للاستماع للتحديثات اللحظية ({Real-time events}) في {GraphQL}.",
+        null
+      ],
+      "t": "اللي بيجيب أو يحسب قيمة الحقل فعلياً في {GraphQL} ({Retrieving or computing field value}) ⬅️ {Resolver}."
+    }
+  },
+  {
+    "q": "Two internal microservices require strongly typed service contracts, efficient message serialization, and streaming capabilities. Which technology is MOST suitable?",
+    "o": ["gRPC", "REST", "GraphQL", "Server-Sent Events"],
+    "a": 0,
+    "e": {
+      "y": "لما خدمات داخلية ({Internal microservices}) تكلم بعضها، بنكون عايزين سرعة قصوى. تقنية {gRPC} بتجمع الـ 3 مميزات دول بالظبط: عقود صارمة ومحددة الأنواع ({Strongly typed contracts} عبر {Protocol Buffers})، وضغط وتحويل سريع جداً للرسائل بصيغة ثنائية ({Efficient message serialization})، ودعم التدفق المباشر ({Streaming capabilities}).",
+      "w": [
+        null,
+        "الـ {REST} بيعتمد غالباً على نصوص {JSON} وروابط عادية، فمش بنفس كفاءة وسرعة الـ {gRPC} بين الميكروسيرفيسز.",
+        "الـ {GraphQL} قوته في مرونة اختيار الحقول للواجهات الأمامية مش التواصل الداخلي السريع بين السيرفرات.",
+        "الـ {SSE} تقنية بث في اتجاه واحد للمتصفح."
+      ],
+      "t": "{Internal microservices} + {Strongly typed contracts} + {Efficient serialization & streaming} ⬅️ {gRPC}."
+    }
+  },
+  {
+    "q": "Which statement BEST distinguishes gRPC from REST and GraphQL?",
+    "o": [
+      "gRPC organizes communication exclusively around HTTP resource URLs.",
+      "gRPC allows clients to freely select arbitrary response fields through queries.",
+      "gRPC primarily exposes remote service methods defined through explicit contracts.",
+      "gRPC is designed exclusively for browser-to-browser communication."
+    ],
+    "a": 2,
+    "e": {
+      "y": "عشان تفرق بين التلاتة الكبار بسهولة: الـ {REST} قايم على روابط الموارد ({Resource URLs})، والـ {GraphQL} قايم على اختيار الحقول بالاستعلامات ({Queries})، أما الـ {gRPC} فبيميزه إنه بيخليك تستدعي دوال أو خدمات عن بُعد ({Remote service methods}) متعرفة جوه عقود صريحة ({Explicit contracts}) كأنها دالة عندك في الكود.",
+      "w": [
+        "ده تعريف الـ {REST} مش الـ {gRPC}.",
+        "ده تعريف الـ {GraphQL} مش الـ {gRPC}.",
+        null,
+        "الـ {gRPC} مصمم أساساً للتواصل بين السيرفرات ({Microservices})، واللي بيربط متصفح بمتصفح هو {WebRTC}."
+      ],
+      "t": "الـ {gRPC} بيتميز بـ: {Remote service methods defined through explicit contracts}."
+    }
+  },
+  {
+    "q": "A service submits a background task and continues processing while the result is delivered later. Which communication model does this represent?",
+    "o": [
+      "Synchronous communication",
+      "Stateless resource retrieval",
+      "Asynchronous communication",
+      "Static content generation"
+    ],
+    "a": 2,
+    "e": {
+      "y": "لما خدمة تبعت مهمة تشتغل في الخلفية ({Background task}) وتكمل هي شغلها عادي من غير ما تقف وتتعطل ({Continues processing})، ولما المهمة تخلص النتيجة توصلها بعدين ({Delivered later})، ده تعريف الاتصال غير المتزامن ({Asynchronous communication}) — زي ما تبعت رسالة واتساب وتكمل يومك.",
+      "w": [
+        "في الاتصال المتزامن ({Synchronous})، الخدمة بتقف مستنية الرد ومبتقدرش تكمل شغل غير لما الرد يرجع.",
+        "ده مبدأ في الـ {REST} ملوش علاقة بجدولة المهام في الخلفية.",
+        null,
+        "توليد المحتوى الثابت يخص الـ {SSG} ومالوش علاقة بنماذج تواصل السيرفرات."
+      ],
+      "t": "يبعت مهمة ويكمل شغله والنتيجة تيجي بعدين ({Continues processing & result delivered later}) ⬅️ {Asynchronous communication}."
+    }
+  },
+  {
+    "q": "An order service publishes an event that independently triggers inventory updates, notifications, and analytics processing. Which architectural pattern is being demonstrated?",
+    "o": [
+      "Direct synchronous request-response",
+      "Event-Driven Architecture",
+      "Client-Side Rendering",
+      "Peer-to-Peer Communication"
+    ],
+    "a": 1,
+    "e": {
+      "y": "بدل ما خدمة الطلبات تروح تكلم المخزن وبعدين الإشعارات وبعدين التحليلات واحدة ورا التانية، هي بتنشر حدث واحد ({Publishes an event}) زي \"تم عمل أوردر جديد!\"، وكل خدمة تانية بتلقط الحدث ده وتشتغل لوحدها بشكل مستقل ({Independently triggers}). النمط المعماري ده هو {Event-Driven Architecture}.",
+      "w": [
+        "الاتصال المباشر المتزامن بيربط الخدمات ببعضها ومفيهوش نشر حدث يشغل كذا خدمة باستقلالية.",
+        null,
+        "الـ {CSR} خاص بعرض الواجهة في المتصفح.",
+        "الـ {Peer-to-Peer} اتصال مباشر بين الأجهزة المتكافئة."
+      ],
+      "t": "خدمة تنشر حدث ({Publishes an event}) يشغل خدمات تانية باستقلالية ({Independently triggers}) ⬅️ {Event-Driven Architecture}."
+    }
+  },
+  {
+    "q": "A distributed application uses logs, metrics, and traces to investigate failures and monitor system behavior. Which cloud-native principle does this represent?",
+    "o": [
+      "Resource Pooling",
+      "Containerization",
+      "Elasticity",
+      "Observability"
+    ],
+    "a": 3,
+    "e": {
+      "y": "في الأنظمة الموزعة، عشان نقدر نفهم حالة السيستم من جوه ونراقب سلوكه ونعرف سبب أي عطل، بنعتمد على 3 ركائز مع بعض: السجلات ({Logs})، والمقاييس الرقمية ({Metrics})، وتتبع مسار الطلبات ({Traces}). الجمع بين التلاتة دول بيمثل مبدأ قابلية الملاحظة والمراقبة ({Observability}).",
+      "w": [
+        "الـ {Resource Pooling} معناه تجميع موارد السحابة ومشاركتها بين عدة مستخدمين.",
+        "الـ {Containerization} معناه تغليف التطبيق في حاويات زي Docker.",
+        "الـ {Elasticity} معناها قدرة النظام على زيادة أو تقليل الموارد تلقائياً حسب ضغط الشغل.",
+        null
+      ],
+      "t": "الثلاثي الشهير ({Logs} + {Metrics} + {Traces}) لمراقبة النظام والتحقيق في الأعطال ⬅️ {Observability}."
+    }
+  },
+  {
+    "q": "A smart surveillance camera analyzes video locally and sends only detected security events to a cloud service. What is the PRIMARY architectural advantage of this approach?",
+    "o": [
+      "Reduced bandwidth consumption and faster local processing",
+      "Complete elimination of cloud infrastructure",
+      "Unlimited computing resources on the camera",
+      "Guaranteed removal of all security risks"
+    ],
+    "a": 0,
+    "e": {
+      "y": "لو الكاميرا بعتت فيديو 24 ساعة للسحابة هتستهلك باقة وسرعة إنترنت ضخمة جداً. فلما تحلل الفيديو محلياً على الكاميرا ({Analyzes video locally}) وتبعت بس اللقطات اللي فيها حدث أمني، إحنا كدا بنوفر استهلاك الشبكة جداً ({Reduced bandwidth consumption}) وبنحصل على معالجة محلية أسرع ({Faster local processing}).",
+      "w": [
+        null,
+        "إحنا ملغيناش السحابة بالكامل ({Complete elimination})، لأننا لسه بنبعتلها الأحداث الأمنية المهمة عشان تتخزن.",
+        "الكاميرا جهاز طرفي صغير مواردها محدودة جداً ومستحيل تكون غير محدودة ({Unlimited}).",
+        "مفيش أي معمارية في العالم بتضمن إزالة كل المخاطر الأمنية بنسبة 100% ({Guaranteed removal})."
+      ],
+      "t": "تحليل البيانات محلياً وإرسال المهم فقط للسحابة ⬅️ {Reduced bandwidth consumption and faster local processing}."
+    }
+  },
+  {
+    "q": "A manufacturing system must detect abnormal equipment behavior and initiate an immediate local response, even when cloud connectivity is temporarily unavailable. Which computing approach is MOST appropriate?",
+    "o": [
+      "Centralized Cloud Computing",
+      "SaaS",
+      "Edge Computing",
+      "Multi-Cloud Computing"
+    ],
+    "a": 2,
+    "e": {
+      "y": "في مصنع، لو ماكينة حرارتها زادت أو حصل فيها عطل خطر، السيستم لازم يوقفها فوراً في نفس اللحظة ({Immediate local response}) حتى لو الإنترنت والسحابة فاصلين ({Cloud connectivity unavailable}). ده بيتطلب إن المعالجة تكون محلية جنب الماكينة مباشرة، وهو الـ {Edge Computing}.",
+      "w": [
+        "السحابة المركزية هتقف تماماً لو الإنترنت فصل في المصنع، وده خطر جداً.",
+        "الـ {SaaS} هي برامج جاهزة ع السحابة وبرضه بتحتاج اتصال بالإنترنت.",
+        null,
+        "الـ {Multi-Cloud} معناه استخدام أكتر من شركة سحابة، بس لو النت قطع في المصنع مش هيفيدوك بحاجة."
+      ],
+      "t": "{Immediate local response} + يشتغل حتى لو الـ {Cloud unavailable} ⬅️ {Edge Computing}."
+    }
+  },
+  {
+    "q": "Which statement BEST describes the primary architectural role of Fog Computing?",
+    "o": [
+      "Replacing all edge devices with centralized cloud servers",
+      "Providing distributed intermediate processing and coordination between edge devices and centralized cloud infrastructure",
+      "Executing all computations exclusively inside web browsers",
+      "Eliminating the need for regional data processing"
+    ],
+    "a": 1,
+    "e": {
+      "y": "الحوسبة الضبابية ({Fog Computing}) مكانها ودورها دايماً **في النص**: بتشتغل كطبقة وسيطة موزعة ({Distributed intermediate processing and coordination}) بين الأجهزة الطرفية ({Edge devices}) وبين السحابة المركزية البعيدة ({Centralized cloud}).",
+      "w": [
+        "الـ {Fog} مش بيلغي أجهزة الـ {Edge} ولا بيستبدلها بسيرفرات مركزية.",
+        null,
+        "الـ {Fog} عبارة عن سيرفرات ونقاط إقليمية مش تنفيذ جوه متصفح الويب.",
+        "بالعكس، الـ {Fog} هو أصلاً اللي بيقوم بالمعالجة الإقليمية ({Regional data processing}) مش بيلغيها."
+      ],
+      "t": "دور الـ {Fog Computing} الأساسي ⬅️ طبقة وسيطة في النص ({Intermediate processing and coordination}) بين الـ {Edge} والـ {Cloud}."
+    }
+  },
+  {
+    "q": "A smart transportation network collects traffic information from hundreds of intersections. Regional servers aggregate data from nearby intersections and coordinate traffic signals. Which computing approach is MOST directly represented by the regional servers?",
+    "o": [
+      "Centralized Cloud Computing",
+      "Software as a Service",
+      "Traditional Web Hosting",
+      "Fog Computing"
+    ],
+    "a": 3,
+    "e": {
+      "y": "تقاطعات المرور في الشارع هي الـ {Edge}، والسيرفرات الإقليمية ({Regional servers}) اللي بتجمع البيانات من التقاطعات القريبة منها وتنسق الإشارات على مستوى المنطقة أو الحي هي التطبيق العملي المباشر لطبقة الـ {Fog Computing}.",
+      "w": [
+        "السحابة المركزية بتكون على مستوى الدولة أو العالم للتحليلات التاريخية الضخمة، مش سيرفر إقليمي بينسق تقاطعات حي.",
+        "الـ {SaaS} نموذج لتقديم البرامج كخدمة للمستخدمين.",
+        "استضافة المواقع التقليدية ملهاش علاقة بإدارة إشارات المرور الذكية.",
+        null
+      ],
+      "t": "أول ما تشوف سيرفرات إقليمية بتجمع وتنسق من أجهزة قريبة ({Regional servers aggregate data from nearby}) ⬅️ {Fog Computing}."
+    }
+  },
+  {
+    "q": "Which statement about Cloud, Edge, and Fog Computing is MOST accurate?",
+    "o": [
+      "They can complement one another by executing different workloads at appropriate locations.",
+      "Fog Computing always eliminates the need for centralized cloud infrastructure.",
+      "Edge Computing must process all data in distant data centers.",
+      "Cloud Computing is always unsuitable for large-scale analytics."
+    ],
+    "a": 0,
+    "e": {
+      "y": "الـ {Cloud} والـ {Fog} والـ {Edge} مش أعداء ومش بيلغوا بعض، بل **بيكملوا بعض ({Complement one another})**؛ كل طبقة فيهم بتنفذ المهام المناسبة لمكانها وإمكانياتها (الـ {Edge} للحظي، والـ {Fog} للتنسيق الإقليمي، والـ {Cloud} للتخزين والتحليلات الضخمة).",
+      "w": [
+        null,
+        "الـ {Fog} بيساعد الـ {Cloud} ويخفف عنه، لكنه مش بيلغي الحاجة للسحابة المركزية دايماً.",
+        "الـ {Edge} بيعالج البيانات محلياً جنب الجهاز، مش في مراكز بيانات بعيدة ({Distant data centers}).",
+        "بالعكس تماماً، الـ {Cloud Computing} هو أنسب وأقوى مكان للتحليلات الضخمة ({Large-scale analytics})."
+      ],
+      "t": "العلاقة بين {Cloud, Edge, and Fog} ⬅️ بيكملوا بعض ({Complement one another})."
+    }
+  },
+  {
+    "q": "A healthcare monitoring system processes urgent sensor readings locally, aggregates information across hospital departments, and stores historical records centrally. Which architecture BEST matches these requirements?",
+    "o": [
+      "Cloud-Only Architecture",
+      "Edge-Only Architecture",
+      "Integrated Cloud – Edge – Fog Architecture",
+      "SaaS-Only Architecture"
+    ],
+    "a": 2,
+    "e": {
+      "y": "السيناريو ده جمع التلات طبقات بالترتيب: 1) معالجة القراءات الحرجة محلياً جنب المريض ({Urgent readings locally} = {Edge})، 2) تجميع البيانات بين أقسام المستشفى ({Across hospital departments} = {Fog})، 3) تخزين السجلات التاريخية مركزياً ({Historical records centrally} = {Cloud}). يبقى ده نظام متكامل يجمع التلاتة ({Integrated Cloud–Edge–Fog Architecture}).",
+      "w": [
+        "الاعتماد على الكلاود فقط هيعمل تأخير في الحالات الطارئة الحرجة.",
+        "الاعتماد على الأجهزة الطرفية فقط مش هيسمح بتخزين السجلات التاريخية مركزياً ولا التنسيق الشامل.",
+        null,
+        "الـ {SaaS-Only} مبيحققش المعالجة المحلية على الحساسات الطبية."
+      ],
+      "t": "محلي ({Locally}) + بين الأقسام ({Across departments}) + تاريخي مركزي ({Centrally}) ⬅️ {Integrated Cloud–Edge–Fog}."
+    }
+  },
+  {
+    "q": "A distributed AI application trains a model collaboratively across multiple devices without requiring all raw training data to be transferred to a central server. Which approach BEST describes this technique?",
+    "o": [
+      "Container Orchestration",
+      "Federated Learning",
+      "Vertical Scaling",
+      "Resource Pooling"
+    ],
+    "a": 1,
+    "e": {
+      "y": "عشان نحافظ على خصوصية بيانات المستخدمين ومنستهلكش شبكة ضخمة، بنستخدم التعلم الفيدرالي ({Federated Learning}): كل جهاز بيدرب نموذج الذكاء الاصطناعي محلياً على الداتا بتاعته، ويبعت بس \"التحديثات والخبرة اللي اتعلمها\" للسيرفر المركزي من غير ما البيانات الخام ({Raw training data}) تخرج من الجهاز أبداً.",
+      "w": [
+        "الـ {Container Orchestration} (زي Kubernetes) خاص بإدارة الحاويات مش تدريب نماذج الـ {AI}.",
+        null,
+        "الـ {Vertical Scaling} معناه تزويد رامات ومعالج سيرفر واحد.",
+        "الـ {Resource Pooling} معناه تجميع موارد الهاردوير في السحابة."
+      ],
+      "t": "تدريب {AI} بالتعاون عبر الأجهزة بدون نقل البيانات الخام ({Without transferring raw training data}) ⬅️ {Federated Learning}."
+    }
+  },
+  {
+    "q": "A smart city application must decide whether a workload should execute on an edge processor, regional fog node, or centralized cloud platform. Which combination of factors should primarily guide this decision?",
+    "o": [
+      "Programming language popularity and interface design",
+      "Number of application screens and website colors",
+      "Cloud provider branding and hardware appearance",
+      "Latency, bandwidth, computing capacity, privacy, connectivity, and operational requirements"
+    ],
+    "a": 3,
+    "e": {
+      "y": "عشان نقرر المهمة تشتغل على الـ {Edge} ولا الـ {Fog} ولا الـ {Cloud}، بنحكم بمعايير هندسية وتشغيلية حقيقية: سرعة الاستجابة المطلوبة ({Latency})، حجم استهلاك الشبكة ({Bandwidth})، قدرة المعالجة المطلوبة ({Computing capacity})، سرية وخصوصية البيانات ({Privacy})، استقرار الإنترنت ({Connectivity})، ومتطلبات التشغيل.",
+      "w": [
+        "شهرة لغة البرمجة وشكل الواجهة ملهمش علاقة بمكان معالجة البيانات في الشبكة.",
+        "عدد الشاشات وألوان الموقع عوامل شكلية سطحية.",
+        "اسم البراند وشكل الجهاز مش معايير هندسية لتوزيع الأحمال.",
+        null
+      ],
+      "t": "معايير اختيار مكان التشغيل ⬅️ {Latency, bandwidth, computing capacity, privacy, connectivity}."
+    }
+  },
+  {
+    "q": "A smart traffic management system uses edge processors for vehicle detection, fog nodes for regional traffic coordination, and cloud services for historical analytics and AI model training. What is the MAIN architectural principle demonstrated?",
+    "o": [
+      "Centralizing every processing task in one location",
+      "Eliminating communication between computing layers",
+      "Distributing workloads according to their processing and coordination requirements",
+      "Replacing all distributed infrastructure with virtual machines"
+    ],
+    "a": 2,
+    "e": {
+      "y": "المبدأ المعماري الأساسي اللي ماشي عليه نظام المرور ده هو **توزيع أحمال العمل ({Distributing workloads})** بحيث كل مهمة تروح للطبقة اللي تناسب متطلبات المعالجة والتنسيق بتاعتها (رصد العربيات اللحظي ع الـ {Edge}، التنسيق الإقليمي ع الـ {Fog}، والتحليل التاريخي وتدريب الـ {AI} ع الـ {Cloud}).",
+      "w": [
+        "ده عكس المثال تماماً، لأن المهام متوزعة على 3 طبقات مش متمركزة في مكان واحد.",
+        "الطبقات التلاتة لازم تتواصل مع بعض وتكمل بعض، مش بنلغي التواصل بينهم.",
+        null,
+        "المثال بيتكلم عن توزيع المهام بين {Edge/Fog/Cloud} ومالوش علاقة باستبدال البنية بـ {Virtual machines}."
+      ],
+      "t": "كل طبقة بتاخد المهمة اللي تناسبها ⬅️ {Distributing workloads according to their processing and coordination requirements}."
+    }
+  },
+  {
+    "q": "A company has a background task that runs only a few times per day and completes quickly. Which approach is MOST likely to avoid paying for continuously provisioned compute capacity?",
+    "o": [
+      "An on-demand serverless function with usage-based billing",
+      "A permanently running dedicated server",
+      "A fixed-capacity virtual machine operating continuously",
+      "A continuously active container with reserved capacity"
+    ],
+    "a": 0,
+    "e": {
+      "y": "طالما المهمة بتشتغل كام مرة بس في اليوم وبتخلص في ثواني، حرام نحجز سيرفر شغال 24 ساعة ندفع تمنه وهو فاضي! الحل الأوفر هو دالة {Serverless} بتشتغل عند الطلب فقط ({On-demand serverless function}) وبتتحاسب على قد ثواني التشغيل الفعلي بس ({Usage-based billing}).",
+      "w": [
+        null,
+        "سيرفر مخصص شغال بشكل دائم هيخلي الشركة تدفع تكلفة عالية طول اليوم ع الفاضي.",
+        "ماكينة افتراضية ({VM}) شغالة باستمرار برضه بتحاسب الشركة على وقت الخمول.",
+        "حاوية محجوزة ونشطة باستمرار بتستهلك فلوس وموارد طول الوقت."
+      ],
+      "t": "مهمة بتشتغل مرات قليلة وعايزين مندفعش وقت الخمول ⬅️ {On-demand serverless function with usage-based billing}."
+    }
+  },
+  {
+    "q": "Which statement BEST explains the relationship between Microservices and Serverless Computing?",
+    "o": [
+      "They are competing architectures that cannot be combined.",
+      "Serverless applications must always use a monolithic design.",
+      "Microservices define service boundaries, while serverless describes an execution and infrastructure model.",
+      "Microservices require blockchain technology, while serverless does not."
+    ],
+    "a": 2,
+    "e": {
+      "y": "المصطلحين مش عكس بعض، كل واحد بيوصف زاوية مختلفة: الـ {Microservices} هي طريقة تنظيمية بنرسم بيها **حدود وتقسيم الخدمات ({Define service boundaries})** (زي خدمة الدفع وخدمة المخزن)، بينما الـ {Serverless} بيوصف **نموذج التشغيل والبنية التحتية ({Execution and infrastructure model})** يعني إزاي الكود ده هيشتغل على السحابة. ونقدر جداً نجمعهم مع بعض.",
+      "w": [
+        "هما مش متنافسين، بل بيتكاملوا مع بعض عادي جداً.",
+        "الـ {Serverless}عكس التصميم المتكتل ({Monolithic}) لأنها بطبيعتها دوال صغيرة وموزعة.",
+        null,
+        "لا الـ {Microservices} ولا الـ {Serverless} بيشترطوا وجود {Blockchain}."
+      ],
+      "t": "احفظ المعادلة دي: {Microservices} = حدود الخدمات ({Service boundaries}) | {Serverless} = نموذج التشغيل ({Execution & infrastructure model})."
+    }
+  },
+  {
+    "q": "A company wants to move a serverless application between cloud providers, but its functions depend heavily on proprietary event formats and managed services. Which challenge is MOST relevant?",
+    "o": [
+      "Circuit Breaker Configuration",
+      "Vendor Lock-In",
+      "Horizontal Scaling",
+      "Data Sharding"
+    ],
+    "a": 1,
+    "e": {
+      "y": "لما تبني تطبيق الـ {Serverless} بتاعك وتعتمد فيه بقوة على خدمات وصيغ أحداث حصرية خاصة بشركة سحابة معينة ({Proprietary event formats and managed services})، وتيجي بعدين تحب تنقل لشركة تانية تلاقي نفسك متكتف ومش عارف تنقل بسهولة، المشكلة دي اسمها الاحتكار أو الارتباط بمزود الخدمة ({Vendor Lock-In}).",
+      "w": [
+        "الـ {Circuit Breaker} هو نمط لحماية الخدمات من الانهيار المتتالي وقت الأعطال.",
+        null,
+        "الـ {Horizontal Scaling} معناه زيادة عدد السيرفرات لتحمل الضغط.",
+        "الـ {Data Sharding} معناه تقسيم قاعدة البيانات الضخمة لأجزاء أصغر."
+      ],
+      "t": "صعوبة النقل بين مزودي السحابة بسبب الاعتماد على خدماتهم الحصرية ({Proprietary services}) ⬅️ {Vendor Lock-In}."
+    }
+  },
+  {
+    "q": "In a blockchain, a historical block is modified after subsequent blocks have been created. Why would this modification generally be detectable?",
+    "o": [
+      "Blockchain transactions are stored only in a central database.",
+      "Every block automatically deletes previous transaction records.",
+      "Blockchain nodes are unable to compare ledger histories.",
+      "Changing block data affects its cryptographic hash and the consistency of subsequent hash references."
+    ],
+    "a": 3,
+    "e": {
+      "y": "في البلوكتشين، كل كتلة ليها بصمة تشفير فريدة ({Cryptographic hash}) بتتحسب من البيانات اللي جواها، وكل كتلة جديدة بتسجل جواها بصمة الكتلة اللي قبلها. لو حد لعب في بيانات كتلة قديمة ({Historical block})، البصمة بتاعتها هتتغير فوراً، فمش هتطابق البصمة المتسجلة في الكتل اللي جت بعدها ({Subsequent hash references})، فالتزوير هيتكشف علطول.",
+      "w": [
+        "البلوكتشين دفتر موزع على عقد كتير مش قاعدة بيانات مركزية ({Central database}).",
+        "الكتل في البلوكتشين مبتتمسحش أبداً ({Immutable}).",
+        "العقد ({Nodes}) بتقارن السجلات ببعضها باستمرار وده اللي بيكشف أي تلاعب.",
+        null
+      ],
+      "t": "أي تعديل في كتلة قديمة يغير الـ {Cryptographic hash} ويكسر ترابط السلسلة ({Subsequent hash references})."
+    }
+  },
+  {
+    "q": "A blockchain network allows validators to participate in block validation based on committed stake and protocol-defined rules. Which consensus approach does this describe?",
+    "o": [
+      "Proof of Stake (PoS)",
+      "Proof of Work (PoW)",
+      "Round-Robin Load Balancing",
+      "Event-Driven Messaging"
+    ],
+    "a": 0,
+    "e": {
+      "y": "لما الشبكة تختار المدققين ({Validators}) عشان يراجعوا ويأكدوا الكتل الجديدة بناءً على الحصة المالية أو العملات اللي هما حاجزينها كضمان في الشبكة ({Committed stake})، فدي آلية إثبات الحصة ({Proof of Stake - PoS}).",
+      "w": [
+        null,
+        "الـ {Proof of Work (PoW)} بيعتمد على التعدين وحل معادلات حسابية معقدة بتستهلك كهرباء وأجهزة قوية، مش حجز عملات.",
+        "الـ {Round-Robin} دي طريقة لتوزيع الترافيك على السيرفرات بالتناوب.",
+        "الـ {Event-Driven Messaging} طريقة تواصل بين الخدمات ملهاش علاقة بإجماع البلوكتشين."
+      ],
+      "t": "التحقق بناءً على الحصة المحجوزة ({Committed stake}) ⬅️ {Proof of Stake (PoS)}."
+    }
+  },
+  {
+    "q": "An enterprise blockchain network restricts transaction validation to a predefined set of authorized organizations. Which statement is MOST accurate?",
+    "o": [
+      "The network must use Proof of Work.",
+      "Every internet user can validate transactions without authorization.",
+      "The network uses a permissioned participation model and may employ a suitable permissioned consensus protocol.",
+      "The network cannot maintain a distributed ledger."
+    ],
+    "a": 2,
+    "e": {
+      "y": "لما مجموعة شركات أو بنوك يعملوا شبكة بلوكتشين خاصة بيهم ويقصروا المشاركة والتحقق على مؤسسات محددة ومعتمدة مسبقاً ({Predefined set of authorized organizations})، الشبكة دي بتتبع نموذج مشاركة بتصريح ({Permissioned participation model}) وتقدر تستخدم بروتوكول إجماع خفيف ومناسب ليها.",
+      "w": [
+        "شبكات الشركات المقفولة مش مضطرة تستخدم {Proof of Work} المكلف والبطيء.",
+        "ده وصف الشبكات العامة المفتوحة ({Permissionless}) زي البيتكوين، مش شبكات الشركات المقيدة.",
+        null,
+        "شبكة الشركات هي برضه دفتر أستاذ موزع ({Distributed ledger}) بين المؤسسات المشاركة فيها."
+      ],
+      "t": "قصر التحقق على مؤسسات معتمدة ({Authorized organizations}) ⬅️ {Permissioned participation model}."
+    }
+  },
+  {
+    "q": "A university records the cryptographic fingerprint of a certificate on a blockchain. An employer later compares a submitted certificate against that record. What is the MAIN purpose of this approach?",
+    "o": [
+      "To guarantee that every statement in the certificate is factually correct",
+      "To support verification that the submitted certificate matches a recorded fingerprint",
+      "To prevent the university from issuing additional certificates",
+      "To store the complete academic history of every student publicly"
+    ],
+    "a": 1,
+    "e": {
+      "y": "الجامعة بتاخد ملف الشهادة وتطلع منه بصمة تشفير ({Cryptographic fingerprint / Hash}) وتسجلها على البلوكتشين. لما الخريج يقدم الشهادة لشركة، الشركة بتقارن بصمة الملف اللي معاها بالبصمة المتسجلة على البلوكتشين عشان **تتحقق إن الشهادة دي سليمة ومطابقة للأصل اللي أصدرته الجامعة ومتزورتش ({Matches a recorded fingerprint})**.",
+      "w": [
+        "البلوكتشين مبيقدرش يضمن إن الكلام المكتوب جوه الشهادة صح في الواقع لو الجامعة نفسها كتبت معلومة غلط، هو بس بيثبت إن الملف متغيرش من ساعة ما اتسجل.",
+        null,
+        "تسجيل البصمة مبيمنعش الجامعة من إصدار شهادات تانية طبعاً.",
+        "إحنا بنسجل البصمة المشفرة ({Fingerprint}) بس مش بننشر السجل الأكاديمي الكامل للطالب على العلن."
+      ],
+      "t": "الهدف من تسجيل بصمة الشهادة على البلوكتشين ⬅️ التحقق من التطابق ({Verification that certificate matches recorded fingerprint})."
+    }
+  },
+  {
+    "q": "A decentralized application allows users to authorize blockchain transactions through a wallet. What is the wallet's PRIMARY role in this interaction?",
+    "o": [
+      "To replace the blockchain consensus mechanism",
+      "To execute every smart contract independently of the blockchain",
+      "To store all blockchain transactions in a centralized database",
+      "To manage cryptographic keys and authorize transactions"
+    ],
+    "a": 3,
+    "e": {
+      "y": "المحفظة الرقمية ({Wallet}) في تطبيقات الـ {Web3} عاملة زي الخزنة والختم الشخصي بتاعك: دورها الأساسي إنها **تحفظ وتدير مفاتيح التشفير الخاصة بيك ({Manage cryptographic keys})** وتستخدمها عشان توقع وتعتمد المعاملات ({Authorize transactions}) لما توافق عليها.",
+      "w": [
+        "المحفظة مبتستبدلش آلية الإجماع بتاعة الشبكة.",
+        "العقود الذكية ({Smart contracts}) بتتنفذ على شبكة البلوكتشين نفسها مش جوه المحفظة بشكل مستقل.",
+        "المحفظة مش قاعدة بيانات مركزية بتخزن كل معاملات البلوكتشين.",
+        null
+      ],
+      "t": "الوظيفة الأساسية للـ {Wallet} ⬅️ إدارة المفاتيح واعتماد المعاملات ({Manage cryptographic keys and authorize transactions})."
+    }
+  },
+  {
+    "q": "A Web3 application uses blockchain-based smart contracts but relies on a centrally hosted frontend and a single external data provider. Which conclusion is MOST accurate?",
+    "o": [
+      "The application includes decentralized components but still has centralized dependencies.",
+      "The application is necessarily fully decentralized.",
+      "The application cannot interact with blockchain networks.",
+      "The application no longer requires trust in external information sources."
+    ],
+    "a": 0,
+    "e": {
+      "y": "مش معنى إن التطبيق بيستخدم عقود ذكية على البلوكتشين إنه بقى لا مركزي بنسبة 100%! طالما واجهة الموقع مرفوعة على سيرفر مركزي ({Centrally hosted frontend}) وبيعتمد على مزود بيانات خارجي واحد ({Single external data provider})، فلو السيرفر ده وقع أو مزود البيانات عطل التطبيق هيتأثر. إذن هو فيه أجزاء لا مركزية بس لسه عنده اعتماديات مركزية ({Centralized dependencies}).",
+      "w": [
+        null,
+        "وجود واجهة مركزية ومصدر بيانات واحد بيمنع إنه يكون لا مركزي بالكامل ({Fully decentralized}).",
+        "التطبيق بيتفاعل عادي جداً مع البلوكتشين عن طريق العقود الذكية.",
+        "طالما بيعتمد على مزود بيانات خارجي واحد، فهو لسه محتاج يثق في المصدر ده."
+      ],
+      "t": "عقود ذكية + واجهة مركزية ومصدر داتا واحد ⬅️ {Includes decentralized components but still has centralized dependencies}."
+    }
+  },
+  {
+    "q": "A supply chain platform uses Microservices for operational workflows, Serverless functions for processing scanning events, and Blockchain for recording selected shared milestones. Why is this hybrid architecture appropriate?",
+    "o": [
+      "Every component must use the same deployment and execution model.",
+      "Blockchain eliminates the need for operational databases and APIs.",
+      "Each technology addresses a different requirement: service modularity, event-driven execution, and shared record verification.",
+      "Serverless functions automatically guarantee the accuracy of physical shipment events."
+    ],
+    "a": 2,
+    "e": {
+      "y": "في الأنظمة الكبيرة زي سلاسل الإمداد والشحن، بنستخدم معمارية هجينة ({Hybrid architecture}) لأن كل تقنية بتحل مشكلة مختلفة بكفاءة: الـ {Microservices} لتقسيم النظام لوحدات مستقلة ({Service modularity})، والـ {Serverless} لتشغيل الكود لحظة مسح الباركود ({Event-driven execution})، والـ {Blockchain} لتوثيق المحطات المهمة المشتركة بين الشركات بحيث محدش يقدر يتلاعب فيها ({Shared record verification}).",
+      "w": [
+        "مش لازم كل أجزاء السيستم تستخدم نفس نموذج التشغيل، التنوع هنا هو سر القوة.",
+        "البلوكتشين مبيغنيش عن قواعد البيانات التشغيلية السريعة والـ {APIs}.",
+        null,
+        "دوال الـ {Serverless} بتنفذ الكود البرمجي بس، ومش بتضمن لوحدها صحة الشحنة الفيزيائية في الواقع."
+      ],
+      "t": "سر نجاح الـ {Hybrid architecture} ⬅️ كل تقنية بتلبي متطلب مختلف ({Service modularity + Event-driven execution + Shared record verification})."
+    }
+  }
+];
+
+const TN = [
+  "1. Web evolution & modern capabilities (Q1–Q10)",
+  "2. Rendering & web architectures (Q11–Q20)",
+  "3. APIs & communication models (Q21–Q30)",
+  "4. Cloud-native, Edge & Fog (Q31–Q40)",
+  "5. Serverless & Blockchain (Q41–Q50)"
+];
+
+const $ = s => document.querySelector(s);
+const N = Q.length;
+const esc = t => t.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+let sel = Array(N).fill(null), exam = false, fin = false, L = [], p = 0, tp = "all";
+try {
+  const s = JSON.parse(localStorage.getItem("wt50"));
+  if (s && s.length == N) sel = s;
+} catch (e) {}
+
+const save = () => {
+  try { localStorage.setItem("wt50", JSON.stringify(sel)); } catch (e) {}
+};
+
+const rev = i => sel[i] !== null && (!exam || fin);
+
+TN.forEach((t, k) => $("#tp").insertAdjacentHTML("beforeend", `<option value="${k}">${t}</option>`));
+
+// Custom Modal Confirmation Helper (Replaces native confirm())
+function askConfirm(msg, onConfirm) {
+  $("#modalMsg").textContent = msg;
+  $("#confirmModal").classList.remove("hide");
+  const cleanUp = () => {
+    $("#confirmModal").classList.add("hide");
+    $("#modalOk").onclick = null;
+    $("#modalCancel").onclick = null;
+  };
+  $("#modalOk").onclick = () => { cleanUp(); onConfirm(); };
+  $("#modalCancel").onclick = () => { cleanUp(); };
+}
+
+// View Switcher (Quiz Tab vs Reference Tab)
+function switchMainTab(mode) {
+  const isRef = mode === "ref";
+  $("#tabQuiz").classList.toggle("active", !isRef);
+  $("#tabRef").classList.toggle("active", isRef);
+  $("#tabQuiz").setAttribute("aria-selected", !isRef);
+  $("#tabRef").setAttribute("aria-selected", isRef);
+  $("#quizView").classList.toggle("hide", isRef);
+  $("#quizAside").classList.toggle("hide", isRef);
+  $("#refView").classList.toggle("hide", !isRef);
+  $("#mainWrap").classList.toggle("ref-mode", isRef);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+$("#tabQuiz").onclick = () => switchMainTab("quiz");
+$("#tabRef").onclick = () => switchMainTab("ref");
+
+// Search Filter inside Reference View
+$("#refSearchInput").addEventListener("input", e => {
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll(".ref-sec").forEach(sec => {
+    if (!q) {
+      sec.style.display = "";
+      return;
+    }
+    const match = sec.innerText.toLowerCase().includes(q);
+    sec.style.display = match ? "" : "none";
+  });
+});
+
+function filt() {
+  L = Q.map((_, i) => i).filter(i => tp == "all" || Math.floor(i / 10) == tp);
+  p = Math.max(0, Math.min(p, L.length - 1));
+}
+
+function go(i) {
+  if (!L.includes(i)) {
+    tp = "all";
+    $("#tp").value = "all";
+    filt();
+  }
+  p = L.indexOf(i);
+  draw();
+}
+
+function pick(k) {
+  const i = L[p];
+  if (fin || (sel[i] !== null && !exam)) return;
+  sel[i] = k;
+  save();
+  draw();
+}
+
+function setMode(e) {
+  const doSwitch = () => {
+    exam = e;
+    fin = false;
+    sel.fill(null);
+    save();
+    $("#m0").classList.toggle("on", !e);
+    $("#m1").classList.toggle("on", e);
+    draw();
+  };
+  if (sel.some(x => x !== null)) {
+    askConfirm("تغيير الوضع هيمسح إجاباتك الحالية. تحب تكمل؟ (Switching mode clears your answers)", doSwitch);
+  } else {
+    doSwitch();
+  }
+}
+
+function draw() {
+  const i = L[p], q = Q[i], r = rev(i);
+  $("#req").textContent = `GET /questions/${i + 1}`;
+  $("#topic").textContent = TN[Math.floor(i / 10)];
+  $("#q").textContent = `${i + 1}. ${q.q}`;
+  $("#opts").innerHTML = q.o.map((t, k) => {
+    let c = "opt";
+    if (r) {
+      if (k == q.a) c += " ok";
+      else if (k == sel[i]) c += " no";
+    } else if (k == sel[i]) c += " on";
+    return `<button class="${c}" data-k="${k}" ${r || fin ? "disabled" : ""}><kbd>${"ABCD"[k]}</kbd><span>${esc(t)}</span></button>`;
+  }).join("");
+
+  const fb = $("#fb");
+  if (r) {
+    const g = sel[i] == q.a;
+    fb.className = "fb " + (g ? "ok" : "no");
+    fb.innerHTML = g
+      ? "<code>200 OK</code><b>إجابة صحيحة! الله ينور يا هندسة.</b>"
+      : `<code>400 Bad Request</code><span>إنت اخترت <b>${"ABCD"[sel[i]]}</b>، لكن الإجابة الصح هي <b>${"ABCD"[q.a]}</b>. شوف التوضيح تحت:</span>`;
+  } else {
+    fb.className = "fb hide";
+  }
+
+  const ex = $("#ex"), F = s => esc(s).replace(/\{([^}]+)\}/g, '<bdi dir="ltr" class="en">$1</bdi>');
+  if (r) {
+    const e = q.e;
+    ex.className = "ex";
+    ex.innerHTML = `
+      <h3>✅ ليه دي الإجابة الصح؟ (شرحنا بالتفصيل)</h3>
+      <div>${F(e.y)}</div>
+      <h3>❌ ليه الاختيارات التانية غلط؟</h3>
+      <ul>
+        ${e.w.map((t, k) => t ? `<li class="${k == sel[i] ? "mine" : ""}"><b dir="ltr">${"ABCD"[k]}</b><span>${F(t)}</span></li>` : "").join("")}
+      </ul>
+      <div class="tip">🔑 <b>مفتاح الحل في الامتحان:</b> ${F(e.t)}</div>
+    `;
+  } else {
+    ex.className = "ex hide";
+  }
+
+  $("#pv").disabled = p == 0;
+  $("#nx").disabled = p == L.length - 1;
+  $("#fn").classList.toggle("hide", !exam || fin);
+
+  const done = sel.filter(x => x !== null).length;
+  const shown = sel.filter((x, j) => rev(j)).length;
+  const good = sel.filter((x, j) => rev(j) && x == Q[j].a).length;
+
+  $("#sc").innerHTML = exam && !fin
+    ? `${done}<small> / ${N} answered</small>`
+    : `${good}<small> / ${shown} correct</small>`;
+  $("#pb").style.width = (done / N * 100) + "%";
+
+  $("#map").innerHTML = Q.map((_, j) => {
+    let c = "";
+    if (rev(j)) c = sel[j] == Q[j].a ? "ok" : "no";
+    else if (sel[j] !== null) c = "ans";
+    if (j == i) c += " cur";
+    if (!L.includes(j)) c += " dim";
+    return `<button class="${c}" data-j="${j}" aria-label="Question ${j + 1}">${j + 1}</button>`;
+  }).join("");
+
+  const res = $("#res"), all = done == N && (!exam || fin);
+  res.classList.toggle("hide", !all);
+  if (all) {
+    const bad = sel.map((x, j) => x != Q[j].a ? j : -1).filter(j => j >= 0);
+    res.innerHTML = `<h2>النتيجة: ${good} من ${N} صح (${Math.round(good / N * 100)}%)</h2>`
+      + (bad.length
+          ? `<p>الأسئلة اللي محتاج تراجعها تاني:</p><div class="chips">${bad.map(j => `<button class="btn" data-j="${j}">${j + 1}</button>`).join("")}</div>`
+          : "<p>علامة كاملة يا فنان! جاهز للامتحان باكتساح.</p>")
+      + `<button class="btn pri" id="rs2">إعادة الحل من الأول (Start over)</button>`;
+  }
+}
+
+function reset() {
+  const doReset = () => {
+    sel.fill(null);
+    fin = false;
+    save();
+    p = 0;
+    draw();
+  };
+  if (sel.some(x => x !== null)) {
+    askConfirm("هل أنت متأكد من مسح كل الإجابات والبدء من جديد؟", doReset);
+  } else {
+    doReset();
+  }
+}
+
+$("#m0").onclick = () => exam && setMode(false);
+$("#m1").onclick = () => !exam && setMode(true);
+$("#tp").onchange = e => { tp = e.target.value; p = 0; filt(); draw(); };
+$("#rs").onclick = reset;
+$("#pv").onclick = () => { p--; draw(); };
+$("#nx").onclick = () => { p++; draw(); };
+$("#fn").onclick = () => {
+  const u = sel.filter(x => x === null).length;
+  if (u) {
+    askConfirm(`لسه فيه ${u} سؤال محلولينش. تحب تسلم الامتحان وتظهر النتيجة على كدا؟`, () => { fin = true; draw(); });
+  } else {
+    fin = true;
+    draw();
+  }
+};
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.dataset.k !== undefined) pick(+b.dataset.k);
+  else if (b.dataset.j !== undefined) {
+    go(+b.dataset.j);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else if (b.id == "rs2") {
+    sel.fill(null);
+    fin = false;
+    save();
+    p = 0;
+    draw();
+    window.scrollTo(0, 0);
+  }
+});
+
+document.addEventListener("keydown", e => {
+  if ($("#quizView").classList.contains("hide")) return;
+  if (e.target.tagName == "SELECT" || e.target.tagName == "INPUT") return;
+  const k = "abcd1234".indexOf(e.key.toLowerCase());
+  if (k >= 0) pick(k % 4);
+  else if (e.key == "ArrowRight" && p < L.length - 1) { p++; draw(); }
+  else if (e.key == "ArrowLeft" && p > 0) { p--; draw(); }
+});
+
+filt();
+draw();
+</script>
+</body>
+</html>
